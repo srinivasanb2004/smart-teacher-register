@@ -1,121 +1,195 @@
-# Smart Teacher Register
+# Smart Teacher Register 📚
 
-A multi-tenant school management app. **Every teacher creates their own account
-and gets a fully isolated workspace** — their own academic years, classes,
-sections, students, attendance, marks, and fees. Teachers can never see or
-modify each other's data.
+A modern **School ERP / Student Management System** built with **Next.js 15, TypeScript, Prisma, and PostgreSQL**. The application is designed for individual teachers and schools to manage students, attendance, marks, fees, and reports from a single dashboard.
 
-## What changed in this update
+## ✨ Features
 
-The original project had a hardcoded login (`admin@sms.com` / `admin123`) and
-no concept of separate teacher accounts — all data was shared globally. This
-version adds:
+### 👨‍🏫 Teacher Authentication
 
-- **Real signup/login** — `Teacher` accounts with bcrypt-hashed passwords and
-  signed JWT session cookies (`lib/auth.ts`).
-- **Per-teacher data isolation** — every model (`AcademicYear`, `SchoolClass`,
-  `Section`, `Student`, `Exam`, `Attendance`, `Mark`, `Fee`, `AppSettings`) now
-  has a `teacherId`. Every API route filters and validates ownership by the
-  logged-in teacher's id before reading or writing anything.
-- **Route protection** — `middleware.ts` blocks access to `/dashboard/*` and
-  any `/api/*` route (except `/api/auth/*`) unless you're logged in.
-- **New pages** — `/register` (sign up) and a rebuilt `/login`.
-- Fixed a duplicate `AcademicYear` model definition in `schema.prisma` that
-  would have prevented `prisma generate` from working at all, and added the
-  missing `AppSettings` model referenced by the settings page.
+* Teacher Registration
+* Teacher Login / Logout
+* JWT-based authentication
+* Protected dashboard routes
 
-## Tech stack
+### 🏫 Academic Management
 
-Next.js (App Router) · Prisma · PostgreSQL · Tailwind CSS · bcryptjs · jose (JWT)
+* Create Academic Years
+* Manage Classes
+* Manage Sections
 
-## Setup (run this locally in VS Code)
+### 👨‍🎓 Student Management
 
-1. **Install dependencies**
+* Add / Edit / Delete Students
+* Parent information
+* Roll number and admission number tracking
+* Search and pagination
 
-   ```bash
-   npm install
-   ```
+### 📅 Attendance
 
-2. **Create a PostgreSQL database.** Any Postgres works — local install,
-   Docker, or a free hosted one (Neon, Supabase, Railway, etc). Example for a
-   local install:
+* Daily attendance entry
+* Bulk attendance for a section
+* Attendance percentage calculation
+* Monthly attendance reports
 
-   ```sql
-   CREATE DATABASE smart_teacher_dev;
-   ```
+### 📝 Marks & Exams
 
-3. **Configure environment variables.** Copy the example file and fill it in:
+* Create exams
+* Bulk marks entry
+* Subject-wise marks
+* Automatic percentage calculation
+* Printable marksheet view
 
-   ```bash
-   cp .env.example .env
-   ```
+### 💰 Fees Management
 
-   ```
-   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/smart_teacher_dev?schema=public"
-   JWT_SECRET="a-long-random-string"   # generate with: openssl rand -base64 32
-   ```
+* Monthly fee tracking
+* Paid / Pending status
+* Mark fee as paid
+* Student fee ledger
+* Fee summary dashboard
 
-4. **Create the database tables.** This project's schema changed significantly
-   (added the `Teacher` table and `teacherId` on every model), so run a fresh
-   migration:
+### 📊 Reports & Analytics
 
-   ```bash
-   npx prisma migrate dev --name init
-   ```
+* Dashboard analytics cards
+* Charts and statistics
+* Student reports
+* Attendance reports
+* Marks reports
+* Export-ready UI
 
-   This also runs `prisma generate` for you automatically.
+### 🎨 UI/UX
 
-5. **Run the app**
+* Responsive design
+* Mobile-friendly dashboard
+* Dark mode support
+* Modern Slate + Indigo theme
+* Animated counters on landing page
 
-   ```bash
-   npm run dev
-   ```
+---
+## 🛠️ Tech Stack
 
-   Open `http://localhost:3000`, click **Get Started**, and create your first
-   teacher account at `/register`. You'll be dropped straight into your own
-   dashboard with a default academic year already created for you.
+### Frontend
 
-## How the multi-tenancy works
+* Next.js 15 (App Router)
+* React 19
+* TypeScript
+* Tailwind CSS
+* Lucide React Icons
 
-- On signup, a `Teacher` row is created (password hashed with bcrypt) and a
-  signed session cookie is set.
-- `middleware.ts` checks that cookie on every request to `/dashboard/*` and
-  `/api/*`, redirecting to `/login` (or returning `401` for API calls) if it's
-  missing or invalid.
-- Every API route calls `withTeacher(...)` (`lib/withTeacher.ts`), which reads
-  the teacher id out of the session and scopes every Prisma query with
-  `where: { teacherId }`. Routes that link to existing records (e.g. adding a
-  student to a class/section) also verify that the referenced record belongs
-  to the same teacher before allowing it.
-- Server-rendered dashboard pages that query Prisma directly (e.g. the main
-  dashboard, student profile, reports) call `getCurrentTeacher()` and scope
-  their queries the same way.
+### Backend
 
-## Deploying
+* Next.js API Routes
+* Prisma ORM
+* PostgreSQL (Neon)
 
-Once it's running locally the way you want:
+### Deployment
 
-1. Push this project to your own GitHub repo.
-2. Deploy on Vercel (or any Node host). Set the same `DATABASE_URL` and
-   `JWT_SECRET` environment variables in your host's dashboard, pointing
-   `DATABASE_URL` at your production Postgres (e.g. Neon/Supabase/Railway).
-3. Run `npx prisma migrate deploy` against the production database (Vercel
-   can do this in a build step, or run it once manually) before first use.
+* Vercel
+* Neon PostgreSQL
 
-## Project structure (high level)
+---
 
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/srinivasanb2004/smart-teacher-register.git
+cd smart-teacher-register
 ```
-app/
-  login/           – login page
-  register/        – signup page
-  dashboard/        – protected teacher dashboard (students, attendance, marks, fees, reports, settings)
-  api/
-    auth/          – register, login, logout, me
-    ...            – all other CRUD routes, each scoped per teacher
-lib/
-  auth.ts          – password hashing + JWT session helpers
-  withTeacher.ts   – wraps API handlers with an auth check
-  prisma.ts        – Prisma client singleton
-middleware.ts      – route protection
-prisma/schema.prisma – Teacher model + teacherId on every other model
+
+### 2. Install dependencies
+
+```bash
+npm install
 ```
+
+### 3. Configure environment variables
+
+Create a `.env` file in the project root.
+
+```env
+DATABASE_URL="your_postgresql_connection_string"
+JWT_SECRET="your_secret_key"
+```
+
+### 4. Generate Prisma client
+
+```bash
+npx prisma generate
+```
+
+### 5. Push database schema
+
+```bash
+npx prisma db push
+```
+
+### 6. Run the development server
+
+```bash
+npm run dev
+```
+
+Open **http://localhost:3000** in your browser.
+
+---
+
+## 🌐 Live Demo
+
+🔗 **Live Application:** [ https://smart-teacher-register-pej4-j44oh09a6.vercel.app/] 
+
+---
+
+## 📦 Deployment
+
+This project is deployed on **Vercel** with **Neon PostgreSQL**.
+
+### Build Command
+
+```bash
+prisma generate && next build
+```
+
+### Environment Variables on Vercel
+
+* `DATABASE_URL`
+* `JWT_SECRET`
+
+---
+
+## 📈 Future Improvements
+
+* Multi-tenant teacher isolation
+* Role-based access (Admin / Teacher)
+* Email notifications
+* PDF export
+* Excel export
+* Parent portal
+* Mobile app (React Native)
+
+---
+
+## 👨‍💻 Author
+
+**Srinivasan B**
+
+* 🎓 B.Sc Information Technology (2024)
+* 💼 Full Stack Developer
+* 🌍 Tamilnadu / India
+
+### Connect with me
+
+* GitHub: https://github.com/srinivasanb2004
+* LinkedIn: https://www.linkedin.com/in/srinivasan2004/
+
+---
+
+## ⭐ Support
+
+If you found this project useful, please **star the repository** ⭐ on GitHub.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
