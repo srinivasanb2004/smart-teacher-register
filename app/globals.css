@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f5f7fb;
+  --foreground: #0f172a;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Custom utility classes without @apply */
+
+.card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+.card-hover {
+  transition: all 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+}
+
+.btn-primary {
+  background: #4f46e5;
+  color: white;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #4338ca;
+}
+
+.btn-secondary {
+  background: white;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #f8fafc;
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.badge-info {
+  background: #e0e7ff;
+  color: #3730a3;
+  border: 1px solid #c7d2fe;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------------- */
+/* Dark mode                                                         */
+/* Applied when <html> has class="dark" (toggled by DarkModeToggle). */
+/* Tailwind v4's dark: variant is media-query based by default and   */
+/* isn't used by this codebase, so dark mode is implemented here as  */
+/* plain CSS overrides on the actual utility classes in use.         */
+/* ---------------------------------------------------------------- */
+
+.dark body {
+  background: #0b1220;
+  color: #f1f5f9;
+}
+
+/* Page/section backgrounds */
+.dark .bg-\[\#F5F7FB\] {
+  background-color: #0b1220 !important;
+}
+.dark .bg-white {
+  background-color: #111827 !important;
+}
+.dark .bg-slate-50 {
+  background-color: #0f172a !important;
+}
+.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+.dark .bg-slate-900 {
+  background-color: #020617 !important;
+}
+.dark .bg-slate-950 {
+  background-color: #020617 !important;
+}
+.dark .bg-gradient-to-br.from-blue-100.via-white.to-purple-100 {
+  background: linear-gradient(to bottom right, #0f172a, #111827, #1e1b3a) !important;
+}
+
+/* Pastel status/summary card backgrounds */
+.dark .bg-indigo-50 { background-color: rgba(99, 102, 241, 0.12) !important; }
+.dark .bg-blue-50   { background-color: rgba(59, 130, 246, 0.12) !important; }
+.dark .bg-green-50  { background-color: rgba(34, 197, 94, 0.12) !important; }
+.dark .bg-red-50    { background-color: rgba(239, 68, 68, 0.12) !important; }
+.dark .bg-amber-50  { background-color: rgba(245, 158, 11, 0.12) !important; }
+.dark .bg-pink-50   { background-color: rgba(236, 72, 153, 0.12) !important; }
+.dark .bg-green-100 { background-color: rgba(34, 197, 94, 0.18) !important; }
+.dark .bg-red-100   { background-color: rgba(239, 68, 68, 0.18) !important; }
+
+/* Borders */
+.dark .border-slate-200  { border-color: #334155 !important; }
+.dark .border-slate-300  { border-color: #475569 !important; }
+.dark .border-slate-900  { border-color: #1e293b !important; }
+.dark .border-indigo-100,
+.dark .border-indigo-200 { border-color: rgba(99, 102, 241, 0.35) !important; }
+.dark .border-blue-200   { border-color: rgba(59, 130, 246, 0.35) !important; }
+.dark .border-green-100,
+.dark .border-green-200  { border-color: rgba(34, 197, 94, 0.35) !important; }
+.dark .border-red-200    { border-color: rgba(239, 68, 68, 0.35) !important; }
+.dark .border-amber-100  { border-color: rgba(245, 158, 11, 0.35) !important; }
+.dark .border-pink-100   { border-color: rgba(236, 72, 153, 0.35) !important; }
+
+/* Text colors */
+.dark .text-slate-900 { color: #f8fafc !important; }
+.dark .text-slate-800 { color: #f1f5f9 !important; }
+.dark .text-slate-700 { color: #e2e8f0 !important; }
+.dark .text-slate-600,
+.dark .text-slate-500 { color: #cbd5e1 !important; }
+.dark .text-slate-400,
+.dark .text-slate-300 { color: #94a3b8 !important; }
+
+/* Table header stripes and hover states read on bg-slate-100/50 above */
+.dark .hover\:bg-slate-50:hover {
+  background-color: #1e293b !important;
+}
+.dark .hover\:bg-slate-100:hover {
+  background-color: #1e293b !important;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background: #020617;
+}
+
+.dark .bg-gradient-to-br {
+  background-image: linear-gradient(
+    to bottom right,
+    #020617,
+    #0f172a,
+    #1e1b4b
+  ) !important;
+}

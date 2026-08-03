@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Every teacher who signs up gets their own isolated workspace.
+// All other models below belong to exactly one teacher via teacherId,
+// so one teacher can never see or modify another teacher's data.
+model Teacher {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  schoolName   String?
+  createdAt    DateTime @default(now())
+
+  academicYears AcademicYear[]
+  classes       SchoolClass[]
+  sections      Section[]
+  students      Student[]
+  exams         Exam[]
+  attendances   Attendance[]
+  marks         Mark[]
+  fees          Fee[]
+  settings      AppSettings?
+}
+
+model AppSettings {
+  id          Int    @id @default(autoincrement())
+  schoolName  String @default("")
+  teacherName String @default("")
+  email       String @default("")
+
+  teacherId Int     @unique
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+}
+
+model AcademicYear {
+  id        Int           @id @default(autoincrement())
+  name      String
+  isActive  Boolean       @default(false)
+  classes   SchoolClass[]
+  students  Student[]
+  createdAt DateTime      @default(now())
+
+  teacherId Int
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([name, teacherId])
+}
+
+model SchoolClass {
+  id        Int          @id @default(autoincrement())
+  name      String
+  yearId    Int
+  year      AcademicYear @relation(fields: [yearId], references: [id], onDelete: Cascade)
+  sections  Section[]
+  students  Student[]
+  createdAt DateTime     @default(now())
+
+  teacherId Int
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([name, yearId])
+}
+
+model Section {
+  id        Int         @id @default(autoincrement())
+  name      String
+  classId   Int
+  class     SchoolClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  students  Student[]
+  createdAt DateTime    @default(now())
+
+  teacherId Int
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([name, classId])
+}
+
+model Student {
+  id          Int      @id @default(autoincrement())
+  admissionNo String
+  rollNo      String
+  name        String
+  gender      String
+  dob         DateTime
+
+  parentName  String
+  parentPhone String
+  address     String
+
+  yearId    Int
+  classId   Int
+  sectionId Int
+
+  year    AcademicYear @relation(fields: [yearId], references: [id], onDelete: Cascade)
+  class   SchoolClass  @relation(fields: [classId], references: [id], onDelete: Cascade)
+  section Section      @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  attendances Attendance[]
+  marks       Mark[]
+  fees        Fee[]
+
+  createdAt DateTime @default(now())
+
+  teacherId Int
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([admissionNo, teacherId])
+}
+
+model Attendance {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  date      DateTime
+  status    String
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  teacherId Int
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, date])
+}
+
+model Exam {
+  id    Int    @id @default(autoincrement())
+  name  String
+  marks Mark[]
+
+  teacherId Int
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([name, teacherId])
+}
+
+model Mark {
+  id        Int    @id @default(autoincrement())
+  studentId Int
+  examId    Int
+  subject   String
+  marks     Int
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  exam    Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  teacherId Int
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, examId, subject])
+}
+
+model Fee {
+  id          Int       @id @default(autoincrement())
+  studentId   Int
+  month       String
+  amount      Int
+  status      String    @default("Pending")
+  paymentDate DateTime?
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  teacherId Int
+  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, month])
+}
