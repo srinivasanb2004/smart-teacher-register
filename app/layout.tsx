@@ -1,5 +1,11 @@
+import type { Metadata } from "next"
 import "./globals.css"
 import { Toaster } from "react-hot-toast"
+
+export const metadata: Metadata = {
+  title: "Teacher Register",
+  description: "Teacher Register - School Management System",
+}
 
 export default function RootLayout({
   children,
