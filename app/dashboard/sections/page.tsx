@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import DeleteRowButton from "../../../components/DeleteRowButton"
 
 type SchoolClass = {
   id: number
@@ -91,6 +92,7 @@ export default function SectionsPage() {
             <tr>
               <th className="text-left p-4">Class</th>
               <th className="text-left p-4">Section</th>
+              <th className="text-left p-4">Actions</th>
             </tr>
           </thead>
 
@@ -99,6 +101,13 @@ export default function SectionsPage() {
               <tr key={item.id} className="border-t">
                 <td className="p-4 font-medium">Class {item.class.name}</td>
                 <td className="p-4">Section {item.name}</td>
+                <td className="p-4">
+                  <DeleteRowButton
+                    url={`/api/sections/${item.id}`}
+                    confirmMessage={`Delete Section ${item.name} of Class ${item.class.name}? This will also delete all students in it, and their attendance, marks and fees. This cannot be undone.`}
+                    onDeleted={loadData}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

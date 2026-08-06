@@ -2,21 +2,6 @@ import { prisma } from "../../../lib/prisma"
 import { NextResponse } from "next/server"
 import { withTeacher } from "../../../lib/withTeacher"
 
-const months = [
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-]
-
 export async function GET() {
   return withTeacher(async (teacherId) => {
     const students = await prisma.student.findMany({
@@ -86,15 +71,9 @@ export async function POST(req: Request) {
       },
     })
 
-    await prisma.fee.createMany({
-      data: months.map((month) => ({
-        studentId: student.id,
-        month,
-        amount: 1000,
-        status: "Pending",
-        teacherId,
-      })),
-    })
+    // No fee records are created automatically anymore. The teacher enters
+    // a fee amount per term (Term 1/2/3) manually from the student's fee
+    // ledger page whenever they're ready.
 
     return NextResponse.json(student)
   })

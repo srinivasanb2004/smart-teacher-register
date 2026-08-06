@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import { prisma } from "../../../../../lib/prisma"
 import { getCurrentTeacher } from "../../../../../lib/auth"
+import ExamFilter from "../../../../../components/ExamFilter"
 
 function getGrade(p: number) {
   if (p >= 90) return "A+"
@@ -13,13 +14,16 @@ function getGrade(p: number) {
 
 export default async function StudentMarksPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>
+  searchParams: Promise<{ examId?: string }>
 }) {
   const teacher = await getCurrentTeacher()
   if (!teacher) redirect("/login")
 
   const { id } = await params
+  const { examId } = await searchParams
 
   const student = await prisma.student.findFirst({
     where: { id: Number(id), teacherId: teacher.teacherId },
@@ -27,6 +31,7 @@ export default async function StudentMarksPage({
       class: true,
       section: true,
       marks: {
+        where: examId ? { examId: Number(examId) } : undefined,
         include: {
           exam: true,
         },
@@ -40,6 +45,12 @@ export default async function StudentMarksPage({
 
   if (!student) return <div>Student not found</div>
 
+  // All exams this teacher has created, for the filter dropdown
+  const exams = await prisma.exam.findMany({
+    where: { teacherId: teacher.teacherId },
+    orderBy: { id: "asc" },
+  })
+
   const total = student.marks.reduce(
     (sum: number, m: any) => sum + m.marks,
     0
@@ -49,13 +60,26 @@ export default async function StudentMarksPage({
     ? Math.round(total / student.marks.length)
     : 0
 
+  const selectedExamName = examId
+    ? exams.find((e) => e.id === Number(examId))?.name
+    : null
+
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-2xl border shadow-sm p-6">
-        <h1 className="text-3xl font-bold">Marksheet</h1>
-        <p className="text-slate-500 mt-1">
-          {student.name} • Class {student.class.name} - {student.section.name}
-        </p>
+      <div className="bg-white rounded-2xl border shadow-sm p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Marksheet</h1>
+          <p className="text-slate-500 mt-1">
+            {student.name} • Class {student.class.name} - {student.section.name}
+          </p>
+          {selectedExamName && (
+            <p className="text-indigo-600 text-sm font-medium mt-1">
+              Showing results for: {selectedExamName}
+            </p>
+          )}
+        </div>
+
+        <ExamFilter exams={exams} studentId={student.id} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -78,6 +102,13 @@ export default async function StudentMarksPage({
       </div>
 
       <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
+        {student.marks.length === 0 ? (
+          <div className="p-10 text-center text-slate-500">
+            {selectedExamName
+              ? `No marks have been entered yet for ${selectedExamName}.`
+              : "No marks have been entered for this student yet."}
+          </div>
+        ) : (
         <table className="w-full">
           <thead className="bg-slate-100">
             <tr>
@@ -97,6 +128,7 @@ export default async function StudentMarksPage({
             ))}
           </tbody>
         </table>
+        )}
       </div>
     </div>
   )

@@ -67,12 +67,12 @@ export default async function StudentProfile({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div className="bg-green-50 border border-green-200 rounded-2xl p-6">
-          <p className="text-green-700 font-medium">Paid Months</p>
+          <p className="text-green-700 font-medium">Paid Terms</p>
           <p className="text-3xl font-bold text-green-800 mt-2">{paid}</p>
         </div>
 
         <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
-          <p className="text-red-700 font-medium">Pending Months</p>
+          <p className="text-red-700 font-medium">Pending Terms</p>
           <p className="text-3xl font-bold text-red-800 mt-2">{pending}</p>
         </div>
       </div>

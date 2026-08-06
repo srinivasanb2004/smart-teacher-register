@@ -1,5 +1,28 @@
 # Smart Teacher Register 📚
 
+## 🆕 Latest Update — read this before running
+
+This update makes the following changes:
+
+1. **Academic Years** is now linked in the sidebar (the page already existed, it just wasn't reachable before).
+2. **Fees dashboard** now has filters for Class, Section, and Term.
+3. **Student marksheet** now has an Exam filter — pick an exam (e.g. Quarterly) and only that exam's marks, total, and percentage are shown.
+4. **Classes** and **Sections** tables now have a Delete button. Deleting a class/section also deletes everything under it (its sections/students and their attendance, marks, and fees) — you'll get a confirmation prompt first.
+5. **Fees structure changed completely**: it used to auto-create 12 fixed ₹1000 "monthly" fee rows for every new student. Now nothing is created automatically — the teacher manually enters an amount for **Term 1 / Term 2 / Term 3** on each student's Fee Ledger page, then marks it Paid/Pending. The fees dashboard's term filter matches this.
+6. **Dark mode has been removed** — the toggle button, its component, and all related CSS are gone.
+
+### ⚠️ Database migration required (breaking change)
+
+Because the fee structure changed (`month` column → `term` column, and the auto-generated monthly fee rows are gone), you need to run a new migration. **This will clear out any existing Fee records** — they were just system-generated ₹1000 placeholders anyway, so this is expected and safe.
+
+```bash
+npx prisma migrate dev
+```
+
+Prisma will detect and apply the new `term_based_fees` migration automatically. See **🚀 Getting Started** below for the full local setup flow, and **📦 Deployment** for how to apply this to your live Vercel + production database.
+
+---
+
 A modern **School ERP / Student Management System** built with **Next.js 15, TypeScript, Prisma, and PostgreSQL**. The application is designed for individual teachers and schools to manage students, attendance, marks, fees, and reports from a single dashboard.
 
 ## ✨ Features
@@ -118,11 +141,13 @@ JWT_SECRET="your_secret_key"
 npx prisma generate
 ```
 
-### 5. Push database schema
+### 5. Apply database migrations
 
 ```bash
-npx prisma db push
+npx prisma migrate dev
 ```
+
+> This project uses Prisma Migrate (not `db push`) — a `prisma/migrations` folder is already tracked in this repo, so always use `migrate dev` (locally) / `migrate deploy` (production) to keep your database in sync with it.
 
 ### 6. Run the development server
 
@@ -143,6 +168,16 @@ Open **http://localhost:3000** in your browser.
 ## 📦 Deployment
 
 This project is deployed on **Vercel** with **Neon PostgreSQL**.
+
+### Applying this update to production
+
+The build command does **not** run migrations automatically, so before (or right after) you push this update to Vercel, run the migration against your **production** database once from your local machine:
+
+```bash
+DATABASE_URL="your_production_neon_connection_string" npx prisma migrate deploy
+```
+
+Skipping this step will break the live app, since the deployed code expects the new `term` column on the `Fee` table.
 
 ### Build Command
 

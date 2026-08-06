@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Bell, LogOut, Search } from "lucide-react"
-import DarkModeToggle from "./DarkModeToggle"
 
 type Me = {
   name: string
@@ -41,8 +40,6 @@ export default function Topbar() {
       </div>
 
       <div className="flex items-center gap-4 ml-auto">
-        <DarkModeToggle />
-
         <button className="relative p-2 rounded-xl hover:bg-slate-100 transition-colors">
           <Bell size={20} className="text-slate-600" />
           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>

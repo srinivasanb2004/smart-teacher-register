@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import {
   LayoutDashboard,
   CalendarCheck,
+  CalendarRange,
   BookOpen,
   IndianRupee,
   Users,
@@ -19,6 +20,7 @@ import {
 
 const menu = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Academic Years", href: "/dashboard/academic-years", icon: CalendarRange },
   { name: "Attendance", href: "/dashboard/attendance", icon: CalendarCheck },
   { name: "Marks", href: "/dashboard/marks", icon: BookOpen },
   { name: "Fees", href: "/dashboard/fees", icon: IndianRupee },
