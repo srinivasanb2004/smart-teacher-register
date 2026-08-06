@@ -167,6 +167,4 @@ model Fee {
 
   student Student @relation(fields: [studentId], references: [id])
   teacher Teacher @relation(fields: [teacherId], references: [id])
-
-  @@unique([studentId, term])
 }
