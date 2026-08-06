@@ -156,17 +156,17 @@ model Mark {
 }
 
 model Fee {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   studentId   Int
+  teacherId   Int
   term        String
   amount      Int
-  status      String    @default("Pending")
+  status      String   @default("Pending")
   paymentDate DateTime?
+  createdAt   DateTime @default(now())
 
-  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
-
-  teacherId Int
-  teacher   Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  student Student @relation(fields: [studentId], references: [id])
+  teacher Teacher @relation(fields: [teacherId], references: [id])
 
   @@unique([studentId, term])
 }
