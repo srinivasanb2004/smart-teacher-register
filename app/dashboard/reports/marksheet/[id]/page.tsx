@@ -47,14 +47,14 @@ export default async function PrintableMarksheet({
         <div>
           <h1 className="text-3xl font-bold">Student Marksheet</h1>
 
-          <p className="text-slate-500 mt-1">
+          <p className="text-stone-500 mt-1">
             Term-wise academic report
           </p>
         </div>
 
         <Link
           href="/dashboard/reports"
-          className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-xl border"
+          className="bg-stone-100 hover:bg-stone-200 text-stone-700 px-4 py-2 rounded-xl border"
         >
           Back to Reports
         </Link>
@@ -67,7 +67,7 @@ export default async function PrintableMarksheet({
             Smart Teacher Register
           </h2>
 
-          <p className="text-slate-500 mt-1">
+          <p className="text-stone-500 mt-1">
             Student Academic Report
           </p>
         </div>
@@ -92,7 +92,7 @@ export default async function PrintableMarksheet({
       </div>
 
       {examEntries.length === 0 ? (
-        <div className="bg-white border rounded-2xl p-10 text-center text-slate-500">
+        <div className="bg-white border rounded-2xl p-10 text-center text-stone-500">
           No marks available for this student.
         </div>
       ) : (
@@ -111,19 +111,19 @@ export default async function PrintableMarksheet({
               key={examName}
               className="bg-white rounded-2xl border shadow-sm overflow-hidden"
             >
-              <div className="p-6 border-b bg-slate-50">
+              <div className="p-6 border-b bg-stone-50">
                 <h3 className="text-xl font-semibold">
                   {examName}
                 </h3>
 
-                <p className="text-sm text-slate-500 mt-1">
+                <p className="text-sm text-stone-500 mt-1">
                   Term-wise marksheet
                 </p>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
-                  <thead className="bg-slate-100">
+                  <thead className="bg-stone-100">
                     <tr>
                       <th className="text-left p-3 border-b">
                         Subject
@@ -149,7 +149,7 @@ export default async function PrintableMarksheet({
               </div>
 
               <div className="p-6 border-t flex justify-end">
-                <div className="w-full sm:w-72 border rounded-xl p-4 text-sm space-y-2 bg-slate-50">
+                <div className="w-full sm:w-72 border rounded-xl p-4 text-sm space-y-2 bg-stone-50">
                   <div className="flex justify-between">
                     <span className="font-medium">Total</span>
                     <span>{total}</span>
@@ -162,7 +162,7 @@ export default async function PrintableMarksheet({
 
                   <div className="flex justify-between border-t pt-2">
                     <span className="font-semibold">Percentage</span>
-                    <span className="font-semibold text-blue-700">
+                    <span className="font-semibold text-teal-700">
                       {percentage}%
                     </span>
                   </div>

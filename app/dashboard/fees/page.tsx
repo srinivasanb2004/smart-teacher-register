@@ -82,7 +82,7 @@ export default async function FeesDashboardPage({
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Fees Dashboard</h1>
-        <p className="text-slate-500 mt-1">
+        <p className="text-stone-500 mt-1">
           Class-wise fee status dashboard
         </p>
       </div>
@@ -91,7 +91,7 @@ export default async function FeesDashboardPage({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div className="bg-white border rounded-2xl p-5">
-          <p className="text-sm text-slate-500">Students</p>
+          <p className="text-sm text-stone-500">Students</p>
           <p className="text-2xl font-bold mt-2">{totalStudents}</p>
         </div>
 
@@ -109,9 +109,9 @@ export default async function FeesDashboardPage({
           </p>
         </div>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5">
-          <p className="text-sm text-blue-700">Collection %</p>
-          <p className="text-2xl font-bold text-blue-800 mt-2">
+        <div className="bg-teal-50 border border-teal-200 rounded-2xl p-5">
+          <p className="text-sm text-teal-700">Collection %</p>
+          <p className="text-2xl font-bold text-teal-800 mt-2">
             {totalStudents
               ? Math.round((paidRows.length / totalStudents) * 100)
               : 0}
@@ -126,7 +126,7 @@ export default async function FeesDashboardPage({
             Student Fee Status
           </h2>
 
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-stone-500 mt-1">
             {classId && sectionId && term
               ? "Showing all students for selected Class, Section and Term"
               : "Select Class, Section and Term to view fee status"}
@@ -134,13 +134,13 @@ export default async function FeesDashboardPage({
         </div>
 
         {feeRows.length === 0 ? (
-          <div className="p-10 text-center text-slate-500">
+          <div className="p-10 text-center text-stone-500">
             No students found for the selected filters.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-100">
+              <thead className="bg-stone-100">
                 <tr>
                   <th className="text-left p-4">Student</th>
                   <th className="text-left p-4">Class</th>
@@ -182,7 +182,7 @@ export default async function FeesDashboardPage({
                     <td className="p-4">
                       <Link
                         href={`/dashboard/students/${row.student.id}/fees`}
-                        className="text-blue-600 hover:underline"
+                        className="text-teal-600 hover:underline"
                       >
                         Open Ledger
                       </Link>

@@ -28,7 +28,7 @@ export default async function SectionDetail({
 
       <div className="bg-white rounded-2xl shadow overflow-hidden">
         <table className="w-full">
-          <thead className="bg-slate-100">
+          <thead className="bg-stone-100">
             <tr>
               <th className="text-left p-3">Roll No</th>
               <th className="text-left p-3">Name</th>
@@ -44,7 +44,7 @@ export default async function SectionDetail({
                 <td className="p-3">
                   <Link
                     href={`/dashboard/students/${student.id}`}
-                    className="text-blue-600 hover:underline"
+                    className="text-teal-600 hover:underline"
                   >
                     View
                   </Link>

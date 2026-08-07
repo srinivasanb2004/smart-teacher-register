@@ -41,29 +41,29 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-purple-100 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-100 via-white to-amber-100 p-6">
       <form
         onSubmit={handleLogin}
         className="w-full max-w-md bg-white/90 backdrop-blur rounded-3xl shadow-xl p-8 space-y-5 border border-white/50"
       >
         {/* Logo */}
-        <div className="w-16 h-16 mx-auto rounded-2xl bg-blue-600 text-white flex items-center justify-center text-2xl font-bold shadow-lg">
+        <div className="w-16 h-16 mx-auto rounded-2xl bg-teal-600 text-white flex items-center justify-center text-2xl font-bold shadow-lg">
           S
         </div>
 
         {/* Heading */}
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-slate-800">
+          <h1 className="text-3xl font-bold text-stone-800">
             Teacher Login
           </h1>
-          <p className="text-slate-500 mt-2">
+          <p className="text-stone-500 mt-2">
             Sign in to your Smart Teacher Register account
           </p>
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
+          <label className="block text-sm font-medium text-stone-700 mb-1">
             Email
           </label>
           <input
@@ -72,13 +72,13 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
         {/* Password */}
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
+          <label className="block text-sm font-medium text-stone-700 mb-1">
             Password
           </label>
           <input
@@ -87,7 +87,7 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
-            className="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
@@ -102,14 +102,14 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-md hover:shadow-lg"
+          className="w-full bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-md hover:shadow-lg"
         >
           {loading ? "Signing in..." : "Login"}
         </button>
 
-        <p className="text-center text-sm text-slate-500">
+        <p className="text-center text-sm text-stone-500">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-blue-600 font-medium hover:underline">
+          <Link href="/register" className="text-teal-600 font-medium hover:underline">
             Create one
           </Link>
         </p>

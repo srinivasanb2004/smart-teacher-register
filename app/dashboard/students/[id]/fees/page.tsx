@@ -119,18 +119,18 @@ export default function StudentFeesPage({
           <div>
             <h1 className="text-3xl font-bold">Fee Ledger</h1>
 
-            <p className="text-slate-500 mt-1">
+            <p className="text-stone-500 mt-1">
               {student.name} • {student.admissionNo}
             </p>
 
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-stone-500 mt-1">
               Class {student.class.name} - {student.section.name}
             </p>
           </div>
 
           <Link
             href="/dashboard/fees"
-            className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-3 rounded-xl border"
+            className="inline-flex items-center gap-2 bg-stone-100 hover:bg-stone-200 text-stone-700 px-4 py-3 rounded-xl border"
           >
             ← Back to Fees Dashboard
           </Link>
@@ -139,7 +139,7 @@ export default function StudentFeesPage({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div className="bg-white border rounded-2xl p-5">
-          <p className="text-sm text-slate-500">Terms Set</p>
+          <p className="text-sm text-stone-500">Terms Set</p>
           <p className="text-2xl font-bold mt-2">
             {summary.set} / {TERMS.length}
           </p>
@@ -159,9 +159,9 @@ export default function StudentFeesPage({
           </p>
         </div>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5">
-          <p className="text-sm text-blue-700">Pending Amount</p>
-          <p className="text-2xl font-bold text-blue-800 mt-2">
+        <div className="bg-teal-50 border border-teal-200 rounded-2xl p-5">
+          <p className="text-sm text-teal-700">Pending Amount</p>
+          <p className="text-2xl font-bold text-teal-800 mt-2">
             ₹{summary.pendingAmount}
           </p>
         </div>
@@ -170,22 +170,23 @@ export default function StudentFeesPage({
       <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
         <div className="p-6 border-b">
           <h2 className="text-xl font-semibold">Term-wise Fees</h2>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-stone-500 mt-1">
             Enter the fee amount for each term, then mark it as paid once it's
             collected.
           </p>
         </div>
 
-        <table className="w-full">
-          <thead className="bg-slate-100">
-            <tr>
-              <th className="text-left p-4">Term</th>
-              <th className="text-left p-4">Amount (₹)</th>
-              <th className="text-left p-4">Status</th>
-              <th className="text-left p-4">Payment Date</th>
-              <th className="text-left p-4">Action</th>
-            </tr>
-          </thead>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px]">
+            <thead className="bg-stone-100">
+              <tr>
+                <th className="text-left p-4">Term</th>
+                <th className="text-left p-4">Amount (₹)</th>
+                <th className="text-left p-4">Status</th>
+                <th className="text-left p-4">Payment Date</th>
+                <th className="text-left p-4">Action</th>
+              </tr>
+            </thead>
 
           <tbody>
             {TERMS.map((term) => {
@@ -210,7 +211,7 @@ export default function StudentFeesPage({
                       <button
                         onClick={() => saveAmount(term)}
                         disabled={savingTerm === term}
-                        className="text-sm bg-slate-800 text-white px-3 py-2 rounded-lg hover:bg-slate-900 disabled:opacity-50"
+                        className="text-sm bg-stone-800 text-white px-3 py-2 rounded-lg hover:bg-stone-900 disabled:opacity-50"
                       >
                         {fee ? "Update" : "Save"}
                       </button>
@@ -229,11 +230,11 @@ export default function StudentFeesPage({
                         {fee.status}
                       </span>
                     ) : (
-                      <span className="text-slate-400 text-sm">Not set</span>
+                      <span className="text-stone-400 text-sm">Not set</span>
                     )}
                   </td>
 
-                  <td className="p-4 text-sm text-slate-600">
+                  <td className="p-4 text-sm text-stone-600">
                     {fee?.paymentDate
                       ? new Date(fee.paymentDate).toLocaleDateString()
                       : "-"}
@@ -241,7 +242,7 @@ export default function StudentFeesPage({
 
                   <td className="p-4">
                     {!fee ? (
-                      <span className="text-slate-400 text-sm">
+                      <span className="text-stone-400 text-sm">
                         Save amount first
                       </span>
                     ) : fee.status === "Pending" ? (
@@ -254,7 +255,7 @@ export default function StudentFeesPage({
                     ) : (
                       <button
                         onClick={() => updateStatus(fee.id, "Pending")}
-                        className="bg-slate-600 text-white px-3 py-2 rounded-xl hover:bg-slate-700 text-sm"
+                        className="bg-stone-600 text-white px-3 py-2 rounded-xl hover:bg-stone-700 text-sm"
                       >
                         Mark Pending
                       </button>
@@ -264,13 +265,14 @@ export default function StudentFeesPage({
               )
             })}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
 
       <div className="bg-white rounded-2xl border shadow-sm p-6">
         <div className="border-b pb-4 mb-4">
           <h2 className="text-xl font-semibold">Receipt Preview</h2>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-stone-500 mt-1">
             Print-ready summary for paid fees
           </p>
         </div>
@@ -292,7 +294,7 @@ export default function StudentFeesPage({
         <div className="mt-6 flex gap-3">
           <button
             onClick={() => window.print()}
-            className="bg-blue-600 text-white px-5 py-3 rounded-xl hover:bg-blue-700"
+            className="bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700"
           >
             Print Receipt
           </button>

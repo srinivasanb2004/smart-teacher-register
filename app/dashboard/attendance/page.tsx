@@ -152,12 +152,12 @@ export default function AttendancePage() {
             {students.length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="bg-white border rounded-2xl p-5">
-                        <p className="text-sm text-slate-500">Total Students</p>
+                        <p className="text-sm text-stone-500">Total Students</p>
                         <p className="text-2xl font-bold mt-2">{students.length}</p>
                     </div>
 
                     <div className="bg-white border rounded-2xl p-5">
-                        <p className="text-sm text-slate-500">Present</p>
+                        <p className="text-sm text-stone-500">Present</p>
                         <p className="text-2xl font-bold text-green-600 mt-2">
                             {
                                 Object.values(attendance).filter((s) => s === "Present").length
@@ -166,7 +166,7 @@ export default function AttendancePage() {
                     </div>
 
                     <div className="bg-white border rounded-2xl p-5">
-                        <p className="text-sm text-slate-500">Absent</p>
+                        <p className="text-sm text-stone-500">Absent</p>
                         <p className="text-2xl font-bold text-red-600 mt-2">
                             {
                                 Object.values(attendance).filter((s) => s === "Absent").length
@@ -183,21 +183,21 @@ export default function AttendancePage() {
                             <h2 className="text-xl font-semibold">
                                 Student Attendance
                             </h2>
-                            <p className="text-sm text-slate-500 mt-1">
+                            <p className="text-sm text-stone-500 mt-1">
                                 Mark attendance for the selected section
                             </p>
                         </div>
 
                         <button
                             onClick={saveAttendance}
-                            className="bg-blue-600 text-white px-5 py-3 rounded-xl hover:bg-blue-700"
+                            className="bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700"
                         >
                             Save Attendance
                         </button>
                     </div>
 
                     <table className="w-full">
-                        <thead className="bg-slate-100">
+                        <thead className="bg-stone-100">
                             <tr>
                                 <th className="text-left p-4">Roll No</th>
                                 <th className="text-left p-4">Student Name</th>

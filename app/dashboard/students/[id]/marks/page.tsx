@@ -69,11 +69,11 @@ export default async function StudentMarksPage({
       <div className="bg-white rounded-2xl border shadow-sm p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">Marksheet</h1>
-          <p className="text-slate-500 mt-1">
+          <p className="text-stone-500 mt-1">
             {student.name} • Class {student.class.name} - {student.section.name}
           </p>
           {selectedExamName && (
-            <p className="text-indigo-600 text-sm font-medium mt-1">
+            <p className="text-teal-600 text-sm font-medium mt-1">
               Showing results for: {selectedExamName}
             </p>
           )}
@@ -84,17 +84,17 @@ export default async function StudentMarksPage({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div className="bg-white border rounded-2xl p-6">
-          <p className="text-sm text-slate-500">Total Marks</p>
+          <p className="text-sm text-stone-500">Total Marks</p>
           <p className="text-3xl font-bold mt-2">{total}</p>
         </div>
 
         <div className="bg-white border rounded-2xl p-6">
-          <p className="text-sm text-slate-500">Percentage</p>
+          <p className="text-sm text-stone-500">Percentage</p>
           <p className="text-3xl font-bold mt-2">{percentage}%</p>
         </div>
 
         <div className="bg-white border rounded-2xl p-6">
-          <p className="text-sm text-slate-500">Grade</p>
+          <p className="text-sm text-stone-500">Grade</p>
           <p className="text-3xl font-bold mt-2">
             {getGrade(percentage)}
           </p>
@@ -103,14 +103,14 @@ export default async function StudentMarksPage({
 
       <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
         {student.marks.length === 0 ? (
-          <div className="p-10 text-center text-slate-500">
+          <div className="p-10 text-center text-stone-500">
             {selectedExamName
               ? `No marks have been entered yet for ${selectedExamName}.`
               : "No marks have been entered for this student yet."}
           </div>
         ) : (
         <table className="w-full">
-          <thead className="bg-slate-100">
+          <thead className="bg-stone-100">
             <tr>
               <th className="text-left p-4">Exam</th>
               <th className="text-left p-4">Subject</th>

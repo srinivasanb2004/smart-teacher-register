@@ -92,7 +92,7 @@ export default function AttendancePage({
                         <option value="Absent">Absent</option>
                     </select>
 
-                    <button className="bg-blue-600 text-white rounded-lg p-3 hover:bg-blue-700">
+                    <button className="bg-teal-600 text-white rounded-lg p-3 hover:bg-teal-700">
                         Save
                     </button>
                 </form>
@@ -122,18 +122,18 @@ export default function AttendancePage({
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-white p-4 rounded-2xl shadow text-center">
-                    <p className="text-slate-500 text-sm">Total</p>
+                    <p className="text-stone-500 text-sm">Total</p>
                     <p className="text-2xl font-bold">{total}</p>
                 </div>
 
                 <div className="bg-white p-4 rounded-2xl shadow text-center">
-                    <p className="text-slate-500 text-sm">Present</p>
+                    <p className="text-stone-500 text-sm">Present</p>
                     <p className="text-2xl font-bold text-green-600">{present}</p>
                 </div>
 
                 <div className="bg-white p-4 rounded-2xl shadow text-center">
-                    <p className="text-slate-500 text-sm">Attendance %</p>
-                    <p className="text-2xl font-bold text-blue-600">{percentage}%</p>
+                    <p className="text-stone-500 text-sm">Attendance %</p>
+                    <p className="text-2xl font-bold text-teal-600">{percentage}%</p>
                 </div>
             </div>
 
@@ -144,7 +144,7 @@ export default function AttendancePage({
                 </div>
 
                 <table className="w-full">
-                    <thead className="bg-slate-100">
+                    <thead className="bg-stone-100">
                         <tr>
                             <th className="text-left p-3">Date</th>
                             <th className="text-left p-3">Status</th>
@@ -173,7 +173,7 @@ export default function AttendancePage({
 
                         {records.length === 0 && (
                             <tr>
-                                <td colSpan={2} className="p-6 text-center text-slate-500">
+                                <td colSpan={2} className="p-6 text-center text-stone-500">
                                     No attendance records yet.
                                 </td>
                             </tr>

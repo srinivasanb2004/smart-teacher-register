@@ -39,21 +39,21 @@ function SidebarContent({
   close?: () => void
 }) {
   return (
-    <div className="w-72 bg-slate-950 text-white min-h-screen flex flex-col border-r border-slate-900">
-      <div className="p-6 border-b border-slate-900 flex items-center justify-between">
+    <div className="w-72 bg-stone-950 text-white min-h-screen flex flex-col border-r border-stone-900">
+      <div className="p-6 border-b border-stone-900 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-indigo-500/30">
+          <div className="w-12 h-12 rounded-2xl bg-teal-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-teal-500/30">
             S
           </div>
 
           <div>
             <h1 className="font-bold text-lg tracking-tight">Smart Teacher</h1>
-            <p className="text-slate-400 text-sm">School ERP</p>
+            <p className="text-stone-400 text-sm">School ERP</p>
           </div>
         </div>
 
         {close && (
-          <button onClick={close} className="lg:hidden p-2 rounded-lg hover:bg-slate-900">
+          <button onClick={close} className="lg:hidden p-2 rounded-lg hover:bg-stone-900">
             <X size={22} />
           </button>
         )}
@@ -71,8 +71,8 @@ function SidebarContent({
               onClick={close}
               className={`group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                 active
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
-                  : "text-slate-300 hover:bg-slate-900 hover:text-white"
+                  ? "bg-teal-600 text-white shadow-lg shadow-teal-500/20"
+                  : "text-stone-300 hover:bg-stone-900 hover:text-white"
               }`}
             >
               <Icon size={20} className="transition-transform group-hover:scale-110" />
@@ -82,10 +82,10 @@ function SidebarContent({
         })}
       </nav>
 
-      <div className="p-4 border-t border-slate-900">
-        <div className="rounded-2xl bg-slate-900 p-4">
+      <div className="p-4 border-t border-stone-900">
+        <div className="rounded-2xl bg-stone-900 p-4">
           <p className="text-sm font-semibold">Smart Teacher Register</p>
-          <p className="text-xs text-slate-400 mt-1">Version 1.0 • 2026</p>
+          <p className="text-xs text-stone-400 mt-1">Version 1.0 • 2026</p>
         </div>
       </div>
     </div>
@@ -109,7 +109,7 @@ export default function Sidebar() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 bg-slate-950 text-white p-3 rounded-xl shadow-lg"
+        className="lg:hidden fixed top-4 left-4 z-50 bg-stone-950 text-white p-3 rounded-xl shadow-lg"
       >
         <Menu size={22} />
       </button>

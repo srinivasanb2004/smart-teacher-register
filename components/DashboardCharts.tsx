@@ -29,10 +29,10 @@ export default function DashboardCharts({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200">
+      <div className="bg-stone-50 rounded-2xl p-4 border border-stone-200">
         <div className="mb-3">
-          <h3 className="font-semibold text-slate-800">Fee Collection</h3>
-          <p className="text-sm text-slate-500">
+          <h3 className="font-semibold text-stone-800">Fee Collection</h3>
+          <p className="text-sm text-stone-500">
             Paid vs pending fees
           </p>
         </div>
@@ -58,10 +58,10 @@ export default function DashboardCharts({
         </ResponsiveContainer>
       </div>
 
-      <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200">
+      <div className="bg-stone-50 rounded-2xl p-4 border border-stone-200">
         <div className="mb-3">
-          <h3 className="font-semibold text-slate-800">Attendance</h3>
-          <p className="text-sm text-slate-500">
+          <h3 className="font-semibold text-stone-800">Attendance</h3>
+          <p className="text-sm text-stone-500">
             Present vs absent percentage
           </p>
         </div>
@@ -87,36 +87,36 @@ export default function DashboardCharts({
         </ResponsiveContainer>
       </div>
 
-      <div className="md:col-span-2 bg-slate-50 rounded-2xl p-4 border border-slate-200">
-        <h3 className="font-semibold text-slate-800 mb-4">
+      <div className="md:col-span-2 bg-stone-50 rounded-2xl p-4 border border-stone-200">
+        <h3 className="font-semibold text-stone-800 mb-4">
           Quick Summary
         </h3>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl p-4 border border-slate-200">
-            <p className="text-sm text-slate-500">Students</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">
+          <div className="bg-white rounded-xl p-4 border border-stone-200">
+            <p className="text-sm text-stone-500">Students</p>
+            <p className="text-2xl font-bold text-stone-900 mt-1">
               {totalStudents}
             </p>
           </div>
 
-          <div className="bg-white rounded-xl p-4 border border-slate-200">
-            <p className="text-sm text-slate-500">Classes</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">
+          <div className="bg-white rounded-xl p-4 border border-stone-200">
+            <p className="text-sm text-stone-500">Classes</p>
+            <p className="text-2xl font-bold text-stone-900 mt-1">
               {totalClasses}
             </p>
           </div>
 
-          <div className="bg-white rounded-xl p-4 border border-slate-200">
-            <p className="text-sm text-slate-500">Paid Fees</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">
+          <div className="bg-white rounded-xl p-4 border border-stone-200">
+            <p className="text-sm text-stone-500">Paid Fees</p>
+            <p className="text-2xl font-bold text-stone-900 mt-1">
               {paidFees}
             </p>
           </div>
 
-          <div className="bg-white rounded-xl p-4 border border-slate-200">
-            <p className="text-sm text-slate-500">Attendance</p>
-            <p className="text-2xl font-bold text-slate-900 mt-1">
+          <div className="bg-white rounded-xl p-4 border border-stone-200">
+            <p className="text-sm text-stone-500">Attendance</p>
+            <p className="text-2xl font-bold text-stone-900 mt-1">
               {attendancePercentage}%
             </p>
           </div>

@@ -36,7 +36,7 @@ export default async function StudentProfile({
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">{student.name}</h1>
-            <p className="text-slate-500 mt-1">
+            <p className="text-stone-500 mt-1">
               {student.admissionNo} • Roll {student.rollNo}
             </p>
           </div>
@@ -45,7 +45,7 @@ export default async function StudentProfile({
             <p className="font-semibold">
               Class {student.class.name} - {student.section.name}
             </p>
-            <p className="text-sm text-slate-500">{student.year.name}</p>
+            <p className="text-sm text-stone-500">{student.year.name}</p>
           </div>
         </div>
       </div>
@@ -78,11 +78,11 @@ export default async function StudentProfile({
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <Link href={`/dashboard/students/${student.id}/attendance`} className="bg-blue-600 text-white px-4 py-3 rounded-xl hover:bg-blue-700">
+        <Link href={`/dashboard/students/${student.id}/attendance`} className="bg-teal-600 text-white px-4 py-3 rounded-xl hover:bg-teal-700">
           Attendance
         </Link>
 
-        <Link href={`/dashboard/students/${student.id}/marks`} className="bg-purple-600 text-white px-4 py-3 rounded-xl hover:bg-purple-700">
+        <Link href={`/dashboard/students/${student.id}/marks`} className="bg-amber-600 text-white px-4 py-3 rounded-xl hover:bg-amber-700">
           Marks
         </Link>
 

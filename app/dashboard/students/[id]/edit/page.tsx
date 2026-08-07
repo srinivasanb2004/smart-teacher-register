@@ -22,7 +22,7 @@ export default async function EditStudent({
     <div className="max-w-2xl bg-white p-6 rounded-2xl shadow">
       <h1 className="text-2xl font-bold mb-4">Edit Student</h1>
 
-      <p className="text-slate-600">
+      <p className="text-stone-600">
         Form UI created successfully. We’ll connect update functionality in the next step.
       </p>
     </div>

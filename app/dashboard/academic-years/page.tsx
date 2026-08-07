@@ -37,17 +37,17 @@ export default function AcademicYearsPage() {
       <div className="bg-white rounded-2xl p-6 shadow-sm border">
         <h1 className="text-2xl font-bold mb-4">Academic Years</h1>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="2027-2028"
-            className="flex-1 border rounded-xl px-4 py-3"
+            className="flex-1 min-w-0 border rounded-xl px-4 py-3"
           />
 
           <button
             onClick={addYear}
-            className="bg-blue-600 text-white px-5 py-3 rounded-xl hover:bg-blue-700"
+            className="w-full sm:w-auto shrink-0 bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700"
           >
             Add Year
           </button>
@@ -56,7 +56,7 @@ export default function AcademicYearsPage() {
 
       <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
         <table className="w-full">
-          <thead className="bg-slate-100">
+          <thead className="bg-stone-100">
             <tr>
               <th className="text-left p-4">Academic Year</th>
               <th className="text-left p-4">Status</th>
@@ -72,7 +72,7 @@ export default function AcademicYearsPage() {
                     className={
                       year.isActive
                         ? "bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
-                        : "bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-sm"
+                        : "bg-stone-100 text-stone-600 px-3 py-1 rounded-full text-sm"
                     }
                   >
                     {year.isActive ? "Active" : "Inactive"}

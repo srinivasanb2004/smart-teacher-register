@@ -27,16 +27,16 @@ export default function WelcomeHeader() {
   return (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
       <div>
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+        <h1 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight">
           Welcome, {settings?.teacherName || "Teacher"} 👋
         </h1>
 
-        <p className="text-slate-500 mt-2">
+        <p className="text-stone-500 mt-2">
           {settings?.schoolName || "Smart Teacher Register"}
         </p>
       </div>
 
-      <div className="text-sm text-slate-500 bg-white border border-slate-200 rounded-xl px-4 py-3 shadow-sm">
+      <div className="text-sm text-stone-500 bg-white border border-stone-200 rounded-xl px-4 py-3 shadow-sm">
         Today • {today || "Loading..."}
       </div>
     </div>

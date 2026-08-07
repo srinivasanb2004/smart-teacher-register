@@ -88,7 +88,7 @@ export default function FeesFilterBar({
       {hasFilters ? (
         <button
           onClick={() => router.push("/dashboard/fees")}
-          className="border rounded-xl px-4 py-3 text-slate-600 hover:bg-slate-50"
+          className="border rounded-xl px-4 py-3 text-stone-600 hover:bg-stone-50"
         >
           Clear Filters
         </button>

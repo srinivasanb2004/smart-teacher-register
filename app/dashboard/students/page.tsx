@@ -83,17 +83,17 @@ export default function StudentsPage() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-800">
+          <h1 className="text-3xl font-bold text-stone-800">
             Students
           </h1>
-          <p className="text-slate-500 mt-1">
+          <p className="text-stone-500 mt-1">
             Manage student records
           </p>
         </div>
 
         <Link
           href="/dashboard/students/new"
-          className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-3 rounded-xl hover:bg-blue-700 shadow-sm"
+          className="inline-flex items-center gap-2 bg-teal-600 text-white px-4 py-3 rounded-xl hover:bg-teal-700 shadow-sm"
         >
           <Plus size={18} />
           Add Student
@@ -105,21 +105,21 @@ export default function StudentsPage() {
           <div className="relative">
             <Search
               size={18}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
             />
 
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or admission no"
-              className="w-full border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
 
           <select
             value={classFilter}
             onChange={(e) => setClassFilter(e.target.value)}
-            className="border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             <option value="all">All Classes</option>
             {classes.map((c) => (
@@ -132,7 +132,7 @@ export default function StudentsPage() {
           <select
             value={sectionFilter}
             onChange={(e) => setSectionFilter(e.target.value)}
-            className="border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             <option value="all">All Sections</option>
             {sections.map((s) => (
@@ -146,35 +146,35 @@ export default function StudentsPage() {
 
       <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
         <div className="p-4 border-b flex items-center justify-between">
-          <h2 className="font-semibold text-slate-800">
+          <h2 className="font-semibold text-stone-800">
             Student List
           </h2>
 
-          <span className="text-sm text-slate-500">
+          <span className="text-sm text-stone-500">
             {filtered.length} student(s)
           </span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-slate-50">
+            <thead className="bg-stone-50">
               <tr>
-                <th className="text-left p-4 text-sm font-semibold text-slate-700">
+                <th className="text-left p-4 text-sm font-semibold text-stone-700">
                   Name
                 </th>
-                <th className="text-left p-4 text-sm font-semibold text-slate-700">
+                <th className="text-left p-4 text-sm font-semibold text-stone-700">
                   Admission No
                 </th>
-                <th className="text-left p-4 text-sm font-semibold text-slate-700">
+                <th className="text-left p-4 text-sm font-semibold text-stone-700">
                   Class
                 </th>
-                <th className="text-left p-4 text-sm font-semibold text-slate-700">
+                <th className="text-left p-4 text-sm font-semibold text-stone-700">
                   Section
                 </th>
-                <th className="text-left p-4 text-sm font-semibold text-slate-700">
+                <th className="text-left p-4 text-sm font-semibold text-stone-700">
                   Parent Phone
                 </th>
-                <th className="text-right p-4 text-sm font-semibold text-slate-700">
+                <th className="text-right p-4 text-sm font-semibold text-stone-700">
                   Actions
                 </th>
               </tr>
@@ -182,28 +182,28 @@ export default function StudentsPage() {
 
             <tbody>
               {paginated.map((student) => (
-                <tr key={student.id} className="border-t hover:bg-slate-50">
-                  <td className="p-4 font-medium text-slate-800">
+                <tr key={student.id} className="border-t hover:bg-stone-50">
+                  <td className="p-4 font-medium text-stone-800">
                     {student.name}
                   </td>
 
-                  <td className="p-4 text-slate-600">
+                  <td className="p-4 text-stone-600">
                     {student.admissionNo}
                   </td>
 
                   <td className="p-4">
-                    <span className="inline-flex px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-medium">
+                    <span className="inline-flex px-3 py-1 rounded-full bg-teal-100 text-teal-700 text-sm font-medium">
                       {student.class.name}
                     </span>
                   </td>
 
                   <td className="p-4">
-                    <span className="inline-flex px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-sm font-medium">
+                    <span className="inline-flex px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-sm font-medium">
                       {student.section.name}
                     </span>
                   </td>
 
-                  <td className="p-4 text-slate-600">
+                  <td className="p-4 text-stone-600">
                     {student.parentPhone}
                   </td>
 
@@ -211,7 +211,7 @@ export default function StudentsPage() {
                     <div className="flex items-center justify-end gap-2">
                       <Link
                         href={`/dashboard/students/${student.id}`}
-                        className="inline-flex items-center gap-1 px-3 py-2 rounded-lg border text-slate-700 hover:bg-slate-100"
+                        className="inline-flex items-center gap-1 px-3 py-2 rounded-lg border text-stone-700 hover:bg-stone-100"
                       >
                         <Eye size={16} />
                         View
@@ -235,7 +235,7 @@ export default function StudentsPage() {
                 <tr>
                   <td
                     colSpan={6}
-                    className="p-10 text-center text-slate-500"
+                    className="p-10 text-center text-stone-500"
                   >
                     No students found
                   </td>
@@ -245,8 +245,8 @@ export default function StudentsPage() {
           </table>
         </div>
 
-        <div className="flex items-center justify-between px-4 py-4 border-t bg-slate-50">
-          <p className="text-sm text-slate-500">
+        <div className="flex items-center justify-between px-4 py-4 border-t bg-stone-50">
+          <p className="text-sm text-stone-500">
             Page {page} of {totalPages}
           </p>
 

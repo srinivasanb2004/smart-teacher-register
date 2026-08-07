@@ -79,7 +79,7 @@ export default function ClassesPage() {
 
           <button
             onClick={addClass}
-            className="bg-blue-600 text-white px-5 py-3 rounded-xl hover:bg-blue-700"
+            className="bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700"
           >
             Add Class
           </button>
@@ -88,7 +88,7 @@ export default function ClassesPage() {
 
       <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
         <table className="w-full">
-          <thead className="bg-slate-100">
+          <thead className="bg-stone-100">
             <tr>
               <th className="text-left p-4">Class</th>
               <th className="text-left p-4">Academic Year</th>

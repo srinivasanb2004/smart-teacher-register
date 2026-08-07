@@ -43,26 +43,26 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-purple-100 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-100 via-white to-amber-100 p-6">
       <form
         onSubmit={handleRegister}
         className="w-full max-w-md bg-white/90 backdrop-blur rounded-3xl shadow-xl p-8 space-y-5 border border-white/50"
       >
-        <div className="w-16 h-16 mx-auto rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold shadow-lg">
+        <div className="w-16 h-16 mx-auto rounded-2xl bg-teal-600 text-white flex items-center justify-center text-2xl font-bold shadow-lg">
           S
         </div>
 
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-slate-800">
+          <h1 className="text-3xl font-bold text-stone-800">
             Create Your Account
           </h1>
-          <p className="text-slate-500 mt-2">
+          <p className="text-stone-500 mt-2">
             Set up your own Smart Teacher Register workspace
           </p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
+          <label className="block text-sm font-medium text-stone-700 mb-1">
             Full Name
           </label>
           <input
@@ -71,12 +71,12 @@ export default function RegisterPage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Priya Sharma"
-            className="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
+          <label className="block text-sm font-medium text-stone-700 mb-1">
             School Name (optional)
           </label>
           <input
@@ -84,12 +84,12 @@ export default function RegisterPage() {
             value={schoolName}
             onChange={(e) => setSchoolName(e.target.value)}
             placeholder="e.g. Green Valley High School"
-            className="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
+          <label className="block text-sm font-medium text-stone-700 mb-1">
             Email
           </label>
           <input
@@ -98,12 +98,12 @@ export default function RegisterPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
+          <label className="block text-sm font-medium text-stone-700 mb-1">
             Password
           </label>
           <input
@@ -113,7 +113,7 @@ export default function RegisterPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="At least 6 characters"
-            className="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
@@ -126,14 +126,14 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-md hover:shadow-lg"
+          className="w-full bg-teal-600 hover:bg-teal-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-md hover:shadow-lg"
         >
           {loading ? "Creating account..." : "Create Account"}
         </button>
 
-        <p className="text-center text-sm text-slate-500">
+        <p className="text-center text-sm text-stone-500">
           Already have an account?{" "}
-          <Link href="/login" className="text-indigo-600 font-medium hover:underline">
+          <Link href="/login" className="text-teal-600 font-medium hover:underline">
             Sign in
           </Link>
         </p>

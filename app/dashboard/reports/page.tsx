@@ -54,7 +54,7 @@ export default async function ReportsPage({
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Reports</h1>
-        <p className="text-slate-500 mt-1">
+        <p className="text-stone-500 mt-1">
           View attendance and marksheet reports class-wise
         </p>
       </div>
@@ -62,7 +62,7 @@ export default async function ReportsPage({
       {/* Filters */}
       <form className="bg-white border rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-end">
         <div className="flex-1">
-          <label className="text-sm font-medium text-slate-700 block mb-1">
+          <label className="text-sm font-medium text-stone-700 block mb-1">
             Class
           </label>
 
@@ -82,7 +82,7 @@ export default async function ReportsPage({
         </div>
 
         <div className="flex-1">
-          <label className="text-sm font-medium text-slate-700 block mb-1">
+          <label className="text-sm font-medium text-stone-700 block mb-1">
             Section
           </label>
 
@@ -103,7 +103,7 @@ export default async function ReportsPage({
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700"
+          className="bg-teal-600 text-white px-5 py-2.5 rounded-xl hover:bg-teal-700"
         >
           Apply
         </button>
@@ -121,7 +121,7 @@ export default async function ReportsPage({
             <input type="hidden" name="sectionId" value={sectionId} />
 
             <div className="w-full md:w-48">
-              <label className="text-sm font-medium text-slate-700 block mb-1">
+              <label className="text-sm font-medium text-stone-700 block mb-1">
                 Month
               </label>
 
@@ -146,7 +146,7 @@ export default async function ReportsPage({
             </div>
 
             <div className="w-full md:w-40">
-              <label className="text-sm font-medium text-slate-700 block mb-1">
+              <label className="text-sm font-medium text-stone-700 block mb-1">
                 Year
               </label>
 
@@ -173,7 +173,7 @@ export default async function ReportsPage({
         <div className="p-6 border-b">
           <h2 className="text-xl font-semibold">Students</h2>
 
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-stone-500 mt-1">
             {classId && sectionId
               ? "Showing students from selected class and section"
               : "Select class and section to narrow down reports"}
@@ -181,13 +181,13 @@ export default async function ReportsPage({
         </div>
 
         {students.length === 0 ? (
-          <div className="p-10 text-center text-slate-500">
+          <div className="p-10 text-center text-stone-500">
             No students found for the selected filters.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-100">
+              <thead className="bg-stone-100">
                 <tr>
                   <th className="text-left p-4">Student</th>
                   <th className="text-left p-4">Class</th>
@@ -215,7 +215,7 @@ export default async function ReportsPage({
                     <td className="p-4">
                       <Link
                         href={`/dashboard/reports/attendance/${student.id}`}
-                        className="text-blue-600 hover:underline font-medium"
+                        className="text-teal-600 hover:underline font-medium"
                       >
                         View
                       </Link>
@@ -224,7 +224,7 @@ export default async function ReportsPage({
                     <td className="p-4">
                       <Link
                         href={`/dashboard/reports/marksheet/${student.id}`}
-                        className="text-purple-600 hover:underline font-medium"
+                        className="text-amber-600 hover:underline font-medium"
                       >
                         Open
                       </Link>

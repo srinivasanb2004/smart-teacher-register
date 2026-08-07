@@ -77,18 +77,18 @@ export default async function AttendanceReport({
         <div className="bg-white rounded-2xl border shadow-sm p-6 flex-1 w-full">
           <h1 className="text-3xl font-bold">Attendance Report</h1>
 
-          <p className="text-slate-500 mt-1">
+          <p className="text-stone-500 mt-1">
             {student.name} • Class {student.class.name} - {student.section.name}
           </p>
 
-          <p className="text-sm text-slate-400 mt-2">
+          <p className="text-sm text-stone-400 mt-2">
             Showing attendance for <strong>{selectedMonthLabel} {selectedYear}</strong>
           </p>
         </div>
 
         <Link
           href="/dashboard/reports"
-          className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-xl border"
+          className="bg-stone-100 hover:bg-stone-200 text-stone-700 px-4 py-2 rounded-xl border"
         >
           Back to Reports
         </Link>
@@ -97,7 +97,7 @@ export default async function AttendanceReport({
       {/* Month Filter */}
       <form className="bg-white border rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-end">
         <div className="flex-1">
-          <label className="text-sm font-medium text-slate-700 block mb-1">
+          <label className="text-sm font-medium text-stone-700 block mb-1">
             Month
           </label>
 
@@ -115,7 +115,7 @@ export default async function AttendanceReport({
         </div>
 
         <div className="w-full md:w-40">
-          <label className="text-sm font-medium text-slate-700 block mb-1">
+          <label className="text-sm font-medium text-stone-700 block mb-1">
             Year
           </label>
 
@@ -129,7 +129,7 @@ export default async function AttendanceReport({
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700"
+          className="bg-teal-600 text-white px-5 py-2.5 rounded-xl hover:bg-teal-700"
         >
           Apply
         </button>
@@ -137,7 +137,7 @@ export default async function AttendanceReport({
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div className="bg-white border rounded-2xl p-5">
-          <p className="text-sm text-slate-500">Total Days</p>
+          <p className="text-sm text-stone-500">Total Days</p>
           <p className="text-2xl font-bold mt-2">{total}</p>
         </div>
 
@@ -148,9 +148,9 @@ export default async function AttendanceReport({
           </p>
         </div>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5">
-          <p className="text-sm text-blue-700">Percentage</p>
-          <p className="text-2xl font-bold text-blue-800 mt-2">
+        <div className="bg-teal-50 border border-teal-200 rounded-2xl p-5">
+          <p className="text-sm text-teal-700">Percentage</p>
+          <p className="text-2xl font-bold text-teal-800 mt-2">
             {percentage}%
           </p>
         </div>
@@ -164,13 +164,13 @@ export default async function AttendanceReport({
         </div>
 
         {student.attendances.length === 0 ? (
-          <div className="p-10 text-center text-slate-500">
+          <div className="p-10 text-center text-stone-500">
             No attendance records found for {selectedMonthLabel} {selectedYear}.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-100">
+              <thead className="bg-stone-100">
                 <tr>
                   <th className="text-left p-4">Date</th>
                   <th className="text-left p-4">Status</th>

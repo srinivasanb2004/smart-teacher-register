@@ -2,7 +2,24 @@
 
 ## 🆕 Latest Update — read this before running
 
-This update makes the following changes:
+This update is UI/UX fixes plus a full visual refresh. No database migration is needed this time — nothing in the schema changed.
+
+1. **Mobile layout fixes**: the "Add Year" button (Academic Years page) and "Create Exam" button (Marks page) no longer overflow off-screen on small phones — the input/button row now stacks vertically on mobile.
+2. **Fee ledger horizontal scroll fixed**: on a student's Fee Ledger page, you can now scroll sideways on mobile to reach the Paid/Pending action buttons — the table was missing a scroll wrapper.
+3. **Student search now actually works**: the search box in the top bar used to do nothing at all, and was hidden on mobile. It's now a real live search (by name, roll no, or admission no) that shows matching students and jumps straight to their profile — visible on every screen size, on every dashboard page.
+4. **Notification bell is now functional**: it shows a real count of pending fee payments and takes you to the Fees page when clicked, instead of being a dead icon.
+5. **Full visual refresh**: moved off the generic blue/indigo look to a warm palette (parchment background, deep teal primary color, amber accent, warm neutral grays) grounded in what the app actually is — a digital version of a teacher's attendance register. Added a proper heading typeface (Sora) alongside the existing body font (Inter), and a subtle ruled-line texture on the landing page hero as a nod to the "register" concept.
+
+### A note on fonts
+
+This update adds `next/font/google` (Sora + Inter) to `app/layout.tsx`. This is a completely standard, first-party Next.js feature and works out of the box on Vercel — no setup needed, nothing to configure. It just needs normal internet access during the build to fetch the font files once, which every real build environment (including Vercel) has.
+
+---
+
+## Update history
+
+<details>
+<summary>Previous update — auth, multi-tenancy, fees restructure, delete buttons (click to expand)</summary>
 
 1. **Academic Years** is now linked in the sidebar (the page already existed, it just wasn't reachable before).
 2. **Fees dashboard** now has filters for Class, Section, and Term.
@@ -11,15 +28,15 @@ This update makes the following changes:
 5. **Fees structure changed completely**: it used to auto-create 12 fixed ₹1000 "monthly" fee rows for every new student. Now nothing is created automatically — the teacher manually enters an amount for **Term 1 / Term 2 / Term 3** on each student's Fee Ledger page, then marks it Paid/Pending. The fees dashboard's term filter matches this.
 6. **Dark mode has been removed** — the toggle button, its component, and all related CSS are gone.
 
-### ⚠️ Database migration required (breaking change)
+### ⚠️ Database migration required (breaking change, already applied if you ran this before)
 
-Because the fee structure changed (`month` column → `term` column, and the auto-generated monthly fee rows are gone), you need to run a new migration. **This will clear out any existing Fee records** — they were just system-generated ₹1000 placeholders anyway, so this is expected and safe.
+Because the fee structure changed (`month` column → `term` column, and the auto-generated monthly fee rows are gone), a migration was needed. **This cleared out any existing Fee records** — they were just system-generated ₹1000 placeholders anyway, so this was expected and safe.
 
 ```bash
 npx prisma migrate dev
 ```
 
-Prisma will detect and apply the new `term_based_fees` migration automatically. See **🚀 Getting Started** below for the full local setup flow, and **📦 Deployment** for how to apply this to your live Vercel + production database.
+</details>
 
 ---
 
@@ -28,6 +45,7 @@ A modern **School ERP / Student Management System** built with **Next.js 15, Typ
 ## ✨ Features
 
 ### 👨‍🏫 Teacher Authentication
+
 
 * Teacher Registration
 * Teacher Login / Logout

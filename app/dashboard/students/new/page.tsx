@@ -108,7 +108,7 @@ export default function AddStudentPage() {
             ))}
           </select>
 
-          <button type="submit" className="bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 md:col-span-2">
+          <button type="submit" className="bg-teal-600 text-white py-3 rounded-xl hover:bg-teal-700 md:col-span-2">
             Save Student
           </button>
         </form>

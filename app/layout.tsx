@@ -1,6 +1,19 @@
 import type { Metadata } from "next"
+import { Inter, Sora } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "react-hot-toast"
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+})
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-sora",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Teacher Register",
@@ -13,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${sora.variable}`}>
       <body>
         {children}
 
@@ -22,7 +35,7 @@ export default function RootLayout({
           toastOptions={{
             style: {
               borderRadius: "12px",
-              background: "#0f172a",
+              background: "#23291f",
               color: "#fff",
             },
           }}

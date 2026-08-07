@@ -58,15 +58,15 @@ export default function SettingsPage() {
     return (
         <div className="max-w-3xl space-y-6">
             <div>
-                <h1 className="text-3xl font-bold text-slate-800">Settings</h1>
-                <p className="text-slate-500 mt-1">
+                <h1 className="text-3xl font-bold text-stone-800">Settings</h1>
+                <p className="text-stone-500 mt-1">
                     School and teacher profile settings
                 </p>
             </div>
 
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
+            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-6 space-y-5">
                 <div>
-                    <label className="text-sm font-medium text-slate-700">
+                    <label className="text-sm font-medium text-stone-700">
                         School Name
                     </label>
 
@@ -74,13 +74,13 @@ export default function SettingsPage() {
                         autoComplete="off"
                         value={schoolName}
                         onChange={(e) => setSchoolName(e.target.value)}
-                        className="mt-2 w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="mt-2 w-full border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="Enter school name"
                     />
                 </div>
 
                 <div>
-                    <label className="text-sm font-medium text-slate-700">
+                    <label className="text-sm font-medium text-stone-700">
                         Teacher Name
                     </label>
 
@@ -88,13 +88,13 @@ export default function SettingsPage() {
                         autoComplete="off"
                         value={teacherName}
                         onChange={(e) => setTeacherName(e.target.value)}
-                        className="mt-2 w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="mt-2 w-full border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="Enter teacher name"
                     />
                 </div>
 
                 <div>
-                    <label className="text-sm font-medium text-slate-700">
+                    <label className="text-sm font-medium text-stone-700">
                         Email
                     </label>
 
@@ -103,7 +103,7 @@ export default function SettingsPage() {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="mt-2 w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="mt-2 w-full border border-stone-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="Enter email address"
                     />
                 </div>
@@ -111,7 +111,7 @@ export default function SettingsPage() {
                 <button
                     onClick={saveSettings}
                     disabled={loading}
-                    className="bg-indigo-600 text-white px-5 py-3 rounded-xl hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+                    className="bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700 disabled:opacity-50 transition-colors"
                 >
                     {loading ? "Saving..." : "Save Settings"}
                 </button>

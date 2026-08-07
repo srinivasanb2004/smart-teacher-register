@@ -127,17 +127,17 @@ export default function MarksPage() {
       <div className="bg-white rounded-2xl border shadow-sm p-6 space-y-4">
         <h1 className="text-2xl font-bold">Bulk Marks Entry</h1>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <input
             value={newExam}
             onChange={(e) => setNewExam(e.target.value)}
             placeholder="Quarterly Exam"
-            className="flex-1 border rounded-xl px-4 py-3"
+            className="flex-1 min-w-0 border rounded-xl px-4 py-3"
           />
 
           <button
             onClick={createExam}
-            className="bg-blue-600 text-white px-5 py-3 rounded-xl hover:bg-blue-700"
+            className="w-full sm:w-auto shrink-0 bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700"
           >
             Create Exam
           </button>
@@ -189,21 +189,21 @@ export default function MarksPage() {
               <h2 className="text-xl font-semibold">
                 Enter Marks
               </h2>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className="text-sm text-stone-500 mt-1">
                 Subject: {subject}
               </p>
             </div>
 
             <button
               onClick={saveMarks}
-              className="bg-blue-600 text-white px-5 py-3 rounded-xl hover:bg-blue-700"
+              className="bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700"
             >
               Save Marks
             </button>
           </div>
 
           <table className="w-full">
-            <thead className="bg-slate-100">
+            <thead className="bg-stone-100">
               <tr>
                 <th className="text-left p-4">Roll No</th>
                 <th className="text-left p-4">Student Name</th>
