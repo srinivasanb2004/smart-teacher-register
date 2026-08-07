@@ -46,12 +46,20 @@ export default function SettingsPage() {
         setLoading(false)
 
         if (res.ok) {
+            // Save to localStorage for dashboard header
+            localStorage.setItem(
+                "schoolSettings",
+                JSON.stringify({
+                    schoolName,
+                    teacherName,
+                    teacherEmail: email,
+                })
+            )
+
             toast.success("Settings saved successfully")
 
             // Reload latest values from database
             await loadSettings()
-        } else {
-            toast.error("Failed to save settings")
         }
     }
 

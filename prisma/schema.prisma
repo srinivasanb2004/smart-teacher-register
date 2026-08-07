@@ -119,6 +119,7 @@ model Attendance {
   studentId Int
   date      DateTime
   status    String
+  createdAt DateTime @default(now())
 
   student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
@@ -140,11 +141,12 @@ model Exam {
 }
 
 model Mark {
-  id        Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   studentId Int
   examId    Int
   subject   String
   marks     Int
+  createdAt DateTime @default(now())
 
   student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
   exam    Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
@@ -156,15 +158,17 @@ model Mark {
 }
 
 model Fee {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   studentId   Int
   teacherId   Int
   term        String
   amount      Int
-  status      String   @default("Pending")
+  status      String    @default("Pending")
   paymentDate DateTime?
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
 
-  student Student @relation(fields: [studentId], references: [id])
-  teacher Teacher @relation(fields: [teacherId], references: [id])
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, term])
 }

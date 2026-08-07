@@ -67,7 +67,7 @@ export async function POST(req: Request) {
         yearId: Number(body.yearId),
         classId: Number(body.classId),
         sectionId: Number(body.sectionId),
-        teacherId,
+        teacherId: teacherId
       },
     })
 

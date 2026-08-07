@@ -1,88 +1,130 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import PaperCard from "@/components/ui/paper-card";
+
+type AcademicYear = {
+  id: number;
+  name: string;
+};
 
 export default function AcademicYearsPage() {
-  const [years, setYears] = useState<any[]>([])
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
+  const [years, setYears] = useState<AcademicYear[]>([]);
+  const [loading, setLoading] = useState(false);
 
   async function loadYears() {
-    const res = await fetch("/api/academic-years")
-    const data = await res.json()
-    setYears(data)
+    try {
+      const res = await fetch("/api/academic-years");
+      const data = await res.json();
+      setYears(data);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   useEffect(() => {
-    loadYears()
-  }, [])
+    loadYears();
+  }, []);
 
-  async function addYear() {
-    if (!name) return
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!name.trim()) return;
 
-    await fetch("/api/academic-years", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        isActive: false,
-      }),
-    })
+    setLoading(true);
 
-    setName("")
-    loadYears()
+    try {
+      const res = await fetch("/api/academic-years", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name }),
+      });
+
+      if (res.ok) {
+        setName("");
+        loadYears();
+      } else {
+        alert("Failed to create academic year");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-2xl p-6 shadow-sm border">
-        <h1 className="text-2xl font-bold mb-4">Academic Years</h1>
+      <div>
+        <p className="text-sm italic text-[var(--stone)]">
+          Academic Management
+        </p>
+        <h1 className="display-font text-4xl font-semibold text-[var(--ink)]">
+          Academic Years
+        </h1>
+      </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
+      <PaperCard className="max-w-2xl bg-[#fbf6ea]">
+        <h2 className="display-font text-2xl font-semibold text-[var(--ink)]">
+          Create Academic Year
+        </h2>
+
+        <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4 sm:flex-row">
           <input
+            type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="2027-2028"
-            className="flex-1 min-w-0 border rounded-xl px-4 py-3"
+            placeholder="2026 - 2027"
+            className="flex-1 rounded-xl border border-[var(--paper-dark)] bg-white px-4 py-3 outline-none focus:border-[var(--teal)]"
           />
 
           <button
-            onClick={addYear}
-            className="w-full sm:w-auto shrink-0 bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700"
+            type="submit"
+            disabled={loading}
+            className="rounded-xl px-5 py-3 font-medium teal-btn disabled:opacity-60"
           >
-            Add Year
+            {loading ? "Creating..." : "Create Year"}
           </button>
+        </form>
+      </PaperCard>
+
+      <PaperCard>
+        <div className="flex items-center justify-between">
+          <h2 className="display-font text-2xl font-semibold text-[var(--ink)]">
+            Existing Academic Years
+          </h2>
+          <span className="rounded-full bg-[var(--paper)] px-3 py-1 text-sm text-[var(--stone)]">
+            {years.length} total
+          </span>
         </div>
-      </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-stone-100">
-            <tr>
-              <th className="text-left p-4">Academic Year</th>
-              <th className="text-left p-4">Status</th>
-            </tr>
-          </thead>
-
-          <tbody>
+        {years.length === 0 ? (
+          <p className="mt-6 text-[var(--stone)]">
+            No academic years created yet.
+          </p>
+        ) : (
+          <div className="mt-6 space-y-3">
             {years.map((year) => (
-              <tr key={year.id} className="border-t">
-                <td className="p-4 font-medium">{year.name}</td>
-                <td className="p-4">
-                  <span
-                    className={
-                      year.isActive
-                        ? "bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
-                        : "bg-stone-100 text-stone-600 px-3 py-1 rounded-full text-sm"
-                    }
-                  >
-                    {year.isActive ? "Active" : "Inactive"}
-                  </span>
-                </td>
-              </tr>
+              <div
+                key={year.id}
+                className="flex items-center justify-between rounded-xl border border-[var(--paper-dark)] bg-white px-4 py-3"
+              >
+                <div>
+                  <p className="font-medium text-[var(--ink)]">{year.name}</p>
+                  <p className="text-sm text-[var(--stone)]">
+                    Academic Year
+                  </p>
+                </div>
+
+                <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+                  Active
+                </span>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </div>
+        )}
+      </PaperCard>
     </div>
-  )
+  );
 }

@@ -1,41 +1,42 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import DeleteRowButton from "../../../components/DeleteRowButton"
+import { useEffect, useState } from "react";
+import DeleteRowButton from "../../../components/DeleteRowButton";
+import PaperCard from "@/components/ui/paper-card";
 
 type SchoolClass = {
-  id: number
-  name: string
-}
+  id: number;
+  name: string;
+};
 
 type Section = {
-  id: number
-  name: string
-  class: SchoolClass
-}
+  id: number;
+  name: string;
+  class: SchoolClass;
+};
 
 export default function SectionsPage() {
-  const [sections, setSections] = useState<Section[]>([])
-  const [classes, setClasses] = useState<SchoolClass[]>([])
-  const [name, setName] = useState("")
-  const [classId, setClassId] = useState("")
+  const [sections, setSections] = useState<Section[]>([]);
+  const [classes, setClasses] = useState<SchoolClass[]>([]);
+  const [name, setName] = useState("");
+  const [classId, setClassId] = useState("");
 
   async function loadData() {
-    const sectionRes = await fetch("/api/sections")
-    const sectionData = await sectionRes.json()
-    setSections(sectionData)
+    const sectionRes = await fetch("/api/sections");
+    const sectionData = await sectionRes.json();
+    setSections(sectionData);
 
-    const classRes = await fetch("/api/classes")
-    const classData = await classRes.json()
-    setClasses(classData)
+    const classRes = await fetch("/api/classes");
+    const classData = await classRes.json();
+    setClasses(classData);
   }
 
   useEffect(() => {
-    loadData()
-  }, [])
+    loadData();
+  }, []);
 
   async function addSection() {
-    if (!name || !classId) return
+    if (!name || !classId) return;
 
     await fetch("/api/sections", {
       method: "POST",
@@ -44,30 +45,47 @@ export default function SectionsPage() {
         name,
         classId,
       }),
-    })
+    });
 
-    setName("")
-    setClassId("")
-    loadData()
+    setName("");
+    setClassId("");
+    loadData();
   }
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-2xl p-6 shadow-sm border">
-        <h1 className="text-2xl font-bold mb-4">Sections</h1>
+      <div>
+        <p className="text-sm italic text-[var(--stone)]">
+          Academic Structure
+        </p>
+        <h1 className="display-font text-4xl font-semibold text-[var(--ink)]">
+          Sections
+        </h1>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <PaperCard className="bg-[#fbf6ea]">
+        <div className="flex items-center justify-between">
+          <h2 className="display-font text-2xl font-semibold text-[var(--ink)]">
+            Create Section
+          </h2>
+
+          <span className="rounded-full bg-[var(--paper)] px-3 py-1 text-sm text-[var(--stone)]">
+            {sections.length} total sections
+          </span>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-3">
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="A"
-            className="border rounded-xl px-4 py-3"
+            className="rounded-xl border border-[var(--paper-dark)] bg-white px-4 py-3 outline-none focus:border-[var(--teal)] focus:ring-2 focus:ring-[var(--teal)]/10"
           />
 
           <select
             value={classId}
             onChange={(e) => setClassId(e.target.value)}
-            className="border rounded-xl px-4 py-3"
+            className="rounded-xl border border-[var(--paper-dark)] bg-white px-4 py-3 outline-none focus:border-[var(--teal)] focus:ring-2 focus:ring-[var(--teal)]/10"
           >
             <option value="">Select Class</option>
             {classes.map((item) => (
@@ -79,40 +97,62 @@ export default function SectionsPage() {
 
           <button
             onClick={addSection}
-            className="bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700"
+            className="rounded-xl px-5 py-3 font-medium teal-btn transition"
           >
             Add Section
           </button>
         </div>
-      </div>
+      </PaperCard>
 
-      <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-stone-100">
-            <tr>
-              <th className="text-left p-4">Class</th>
-              <th className="text-left p-4">Section</th>
-              <th className="text-left p-4">Actions</th>
-            </tr>
-          </thead>
+      <PaperCard className="overflow-hidden p-0">
+        <div className="border-b border-[var(--paper-dark)] bg-[#f3ead3] px-6 py-4">
+          <h2 className="display-font text-2xl font-semibold text-[var(--ink)]">
+            Existing Sections
+          </h2>
+        </div>
 
-          <tbody>
-            {sections.map((item) => (
-              <tr key={item.id} className="border-t">
-                <td className="p-4 font-medium">Class {item.class.name}</td>
-                <td className="p-4">Section {item.name}</td>
-                <td className="p-4">
-                  <DeleteRowButton
-                    url={`/api/sections/${item.id}`}
-                    confirmMessage={`Delete Section ${item.name} of Class ${item.class.name}? This will also delete all students in it, and their attendance, marks and fees. This cannot be undone.`}
-                    onDeleted={loadData}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        {sections.length === 0 ? (
+          <div className="p-8 text-center text-[var(--stone)]">
+            No sections created yet.
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px]">
+              <thead className="border-b border-[var(--paper-dark)] bg-[#faf6ea]">
+                <tr className="text-left text-sm text-[var(--stone)]">
+                  <th className="p-4 font-medium">Class</th>
+                  <th className="p-4 font-medium">Section</th>
+                  <th className="p-4 font-medium">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody className="divide-y divide-[var(--paper-dark)] bg-white">
+                {sections.map((item) => (
+                  <tr key={item.id} className="hover:bg-[#fffaf0]">
+                    <td className="p-4 font-medium text-[var(--ink)]">
+                      Class {item.class.name}
+                    </td>
+
+                    <td className="p-4">
+                      <span className="rounded-full bg-[var(--paper)] px-3 py-1 text-sm font-medium text-[var(--ink)]">
+                        Section {item.name}
+                      </span>
+                    </td>
+
+                    <td className="p-4">
+                      <DeleteRowButton
+                        url={`/api/sections/${item.id}`}
+                        confirmMessage={`Delete Section ${item.name} of Class ${item.class.name}? This will also delete all students in it, and their attendance, marks and fees. This cannot be undone.`}
+                        onDeleted={loadData}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </PaperCard>
     </div>
-  )
+  );
 }
