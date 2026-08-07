@@ -52,8 +52,9 @@ export default async function FeesDashboardPage({
   })
 
   // Create fee lookup map by studentId
-  const feeMap = new Map(fees.map((f) => [f.studentId, f]))
-
+  const feeMap = new Map<number, (typeof fees)[number]>(
+    fees.map((f) => [f.studentId, f])
+  )
   // Merge students with fee status
   const feeRows = students.map((student) => {
     const fee = feeMap.get(student.id)
@@ -169,11 +170,10 @@ export default async function FeesDashboardPage({
 
                     <td className="p-4">
                       <span
-                        className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-                          row.status === "Paid"
+                        className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${row.status === "Paid"
                             ? "bg-green-100 text-green-700"
                             : "bg-red-100 text-red-700"
-                        }`}
+                          }`}
                       >
                         {row.status}
                       </span>
