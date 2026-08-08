@@ -90,29 +90,29 @@ export default function DashboardLayout({
         )}
 
         <aside
-          className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 flex-col overflow-y-auto border-r border-white/10 teal-gradient p-4 text-white transition-transform duration-300 overscroll-contain lg:w-72 lg:p-6 lg:static lg:h-auto lg:translate-x-0 lg:overflow-visible ${
+          className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto overscroll-contain border-r border-white/10 teal-gradient p-6 text-white transition-transform duration-300 lg:static lg:translate-x-0 lg:overflow-visible ${
             open ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <div className="flex items-center gap-2 border-b border-white/10 pb-4 lg:gap-3 lg:pb-6">
-            <div className="rounded-lg border border-amber-300/40 bg-white/5 p-1.5 lg:rounded-xl lg:p-2">
-              <BookOpen className="h-5 w-5 text-amber-300 lg:h-6 lg:w-6" />
+          <div className="flex items-center gap-3 border-b border-white/10 pb-6">
+            <div className="rounded-xl border border-amber-300/40 bg-white/5 p-2">
+              <BookOpen className="h-6 w-6 text-amber-300" />
             </div>
 
             <div>
-              <p className="display-font text-base font-semibold leading-none lg:text-xl">
+              <p className="display-font text-xl font-semibold leading-none">
                 SMART
               </p>
-              <p className="display-font text-base font-semibold leading-none lg:text-xl">
+              <p className="display-font text-xl font-semibold leading-none">
                 TEACHER REGISTER
               </p>
-              <p className="mt-1 text-[10px] text-white/60 lg:text-xs">
+              <p className="mt-1 text-xs text-white/60">
                 Digital Classroom Register
               </p>
             </div>
           </div>
 
-          <nav className="mt-5 space-y-1 lg:mt-8 lg:space-y-2">
+          <nav className="mt-8 space-y-2">
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = pathname === item.href;
@@ -122,20 +122,31 @@ export default function DashboardLayout({
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition lg:gap-3 lg:rounded-xl lg:px-4 lg:py-3 ${
+                  className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${
                     active
                       ? "bg-white/15 text-white shadow-lg"
                       : "text-white/75 hover:bg-white/10 hover:text-white"
                   }`}
                 >
-                  <Icon className="h-4 w-4 lg:h-5 lg:w-5" />
+                  <Icon className="h-5 w-5" />
                   {item.label}
                 </Link>
               );
             })}
           </nav>
 
-          <div className="mt-auto pt-5 space-y-3 lg:pt-8 lg:space-y-4">
+          <div className="pt-8 space-y-4">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="text-xs text-white/60">Academic Year</p>
+              <p className="mt-1 font-semibold text-white">2026 – 2027</p>
+              <div className="mt-3 h-2 rounded-full bg-white/10">
+                <div className="h-2 w-3/4 rounded-full bg-amber-300" />
+              </div>
+              <p className="mt-2 text-xs text-white/60">
+                75% term completed
+              </p>
+            </div>
+
             <button
               onClick={handleLogout}
               className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"

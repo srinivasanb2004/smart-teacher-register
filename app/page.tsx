@@ -37,51 +37,44 @@ export default function HomePage() {
   return (
     <main className="ledger-bg min-h-screen">
       <header className="teal-gradient sticky top-0 z-50 border-b border-white/10 text-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-3">
-            <div className="rounded-xl border border-amber-300/40 bg-white/5 p-2">
-              <BookOpen className="h-6 w-6 text-amber-300" />
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <div className="shrink-0 rounded-xl border border-amber-300/40 bg-white/5 p-1.5 sm:p-2">
+              <BookOpen className="h-5 w-5 text-amber-300 sm:h-6 sm:w-6" />
             </div>
-            <div>
-              <p className="display-font text-base font-semibold tracking-wide md:text-xl">
+
+            <div className="min-w-0">
+              <p className="display-font truncate text-sm font-semibold tracking-wide sm:text-base md:text-xl">
                 SMART TEACHER REGISTER
               </p>
-              <p className="text-xs text-amber-100/80">
+              <p className="hidden text-xs text-amber-100/80 sm:block">
                 Your Class. Your Register. Digitally.
               </p>
             </div>
           </div>
 
           <nav className="hidden gap-8 text-sm md:flex">
-            <a href="#features" className="hover:text-amber-200 transition">
-              Features
-            </a>
-            <a href="#how" className="hover:text-amber-200 transition">
-              How It Works
-            </a>
-            <a href="#about" className="hover:text-amber-200 transition">
-              About
-            </a>
-            <a href="#contact" className="hover:text-amber-200 transition">
-              Contact
-            </a>
+            <a href="#features" className="transition hover:text-amber-200">Features</a>
+            <a href="#how" className="transition hover:text-amber-200">How It Works</a>
+            <a href="#about" className="transition hover:text-amber-200">About</a>
+            <a href="#contact" className="transition hover:text-amber-200">Contact</a>
           </nav>
-          <div className="flex items-center gap-2">
+
+          <div className="flex shrink-0 items-center gap-2">
             <a
               href="/login"
-              className="rounded-full border border-amber-300/50 bg-white/10 px-3 py-2 text-xs font-medium text-white backdrop-blur transition hover:bg-white/20 hover:border-amber-300 md:px-5 md:text-sm"
+              className="rounded-full border border-amber-300/50 bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur transition hover:border-amber-300 hover:bg-white/20 sm:px-5 sm:py-2 sm:text-sm"
             >
               Log In
             </a>
 
             <a
-              href="/dashboard"
-              className="rounded-full px-3 py-2 text-xs font-medium amber-btn transition md:px-5 md:text-sm"
+              href="/register"
+              className="amber-btn rounded-full px-3 py-1.5 text-xs font-medium transition sm:px-5 sm:py-2 sm:text-sm"
             >
               Get Started
             </a>
           </div>
-
         </div>
       </header>
 
@@ -442,11 +435,12 @@ export default function HomePage() {
 
             <div className="flex flex-col items-start gap-2 lg:items-end">
               <a
-                href="/dashboard"
+                href="/register"
                 className="rounded-xl px-6 py-3 font-medium teal-btn transition"
               >
                 Get Started Free
               </a>
+
               <p className="text-sm text-[var(--stone)]">
                 No credit card required
               </p>
@@ -537,6 +531,6 @@ export default function HomePage() {
           © 2026 Smart Teacher Register. All rights reserved.
         </div>
       </footer>
-    </main>
+    </main >
   );
 }
