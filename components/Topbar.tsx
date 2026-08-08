@@ -34,27 +34,36 @@ export default function Topbar() {
   const initial = me?.name?.charAt(0)?.toUpperCase() || "T"
 
   return (
-    <header className="bg-white/80 backdrop-blur border-b border-stone-200 px-4 md:px-6 py-3 md:py-4 sticky top-0 z-20 space-y-3">
-      <div className="flex items-center justify-between gap-3">
-        {/* Reserves space so this row doesn't sit under the fixed mobile menu button */}
-        <div className="w-10 lg:hidden shrink-0" />
-
-        <div className="hidden lg:block flex-1 max-w-md">
-          <StudentSearch />
+    <header className="w-full space-y-3">
+      {/* Top row */}
+      <div className="flex items-center justify-between gap-2 rounded-2xl border border-[#e8dfc8] bg-[#f8f3e7]/95 px-3 py-3 shadow-sm backdrop-blur md:px-4 lg:px-5">
+        {/* Left: compact title */}
+        <div className="min-w-0 pl-14 lg:pl-0">
+          <h1 className="truncate text-base font-semibold text-[#18322d] md:text-lg lg:text-xl">
+            Smart Teacher Register
+          </h1>
+          <p className="text-xs text-stone-600 md:text-sm">
+            Teacher Dashboard
+          </p>
         </div>
 
-        <div className="flex items-center gap-2 md:gap-4 ml-auto">
-          <NotificationBell />
+        {/* Right actions */}
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#e8dfc8] bg-white shadow-sm md:h-11 md:w-11">
+            <NotificationBell />
+          </div>
 
-          <div className="flex items-center gap-3 bg-white border border-stone-200 rounded-2xl px-3 py-2 shadow-sm">
-            <div className="text-right hidden sm:block">
-              <p className="text-sm font-semibold text-stone-800">
+          <div className="flex items-center gap-2 rounded-xl border border-[#e8dfc8] bg-white px-2 py-2 shadow-sm md:px-3">
+            <div className="hidden text-right sm:block">
+              <p className="max-w-[140px] truncate text-sm font-semibold text-stone-800">
                 {me?.name || "Teacher"}
               </p>
-              <p className="text-xs text-stone-500">{me?.email || ""}</p>
+              <p className="max-w-[140px] truncate text-xs text-stone-500">
+                {me?.email || ""}
+              </p>
             </div>
 
-            <div className="w-10 h-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-semibold shadow-lg shadow-teal-500/30">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-700 text-sm font-semibold text-white shadow-lg shadow-teal-500/20">
               {initial}
             </div>
           </div>
@@ -62,15 +71,15 @@ export default function Topbar() {
           <button
             onClick={handleLogout}
             title="Logout"
-            className="flex items-center gap-2 px-3 py-2 rounded-xl border border-stone-200 bg-white hover:bg-red-50 hover:border-red-200 hover:text-red-600 text-stone-600 text-sm font-medium transition-colors"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#e8dfc8] bg-white text-stone-600 shadow-sm transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600 md:h-11 md:w-11"
           >
             <LogOut size={18} />
-            <span className="hidden sm:inline">Logout</span>
           </button>
         </div>
       </div>
 
-      <div className="lg:hidden">
+      {/* Search */}
+      <div className="w-full">
         <StudentSearch />
       </div>
     </header>

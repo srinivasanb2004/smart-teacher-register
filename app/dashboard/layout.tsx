@@ -65,7 +65,7 @@ export default function DashboardLayout({
         if (data?.name) setTeacherName(data.name);
         if (data?.email) setTeacherEmail(data.email);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   async function handleLogout() {
@@ -165,11 +165,13 @@ export default function DashboardLayout({
                   <Menu className="h-5 w-5" />
                 </button>
 
-                <div>
-                  <h1 className="display-font text-2xl font-semibold text-[var(--ink)]">
+                <div className="min-w-0">
+                  <h1 className="display-font truncate text-lg font-semibold text-[var(--ink)] sm:text-xl lg:text-2xl">
                     {schoolName}
                   </h1>
-                  <p className="text-sm text-[var(--stone)]">
+
+                  {/* Hidden on mobile, visible from sm and above */}
+                  <p className="hidden sm:block text-sm text-[var(--stone)]">
                     Teacher Dashboard
                   </p>
                 </div>
