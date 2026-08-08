@@ -89,7 +89,7 @@ export default function DashboardLayout({
         )}
 
         <aside
-          className={`fixed inset-y-0 left-0 z-50 w-72 transform border-r border-white/10 teal-gradient p-6 text-white transition-transform duration-300 lg:static lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"
+          className={`fixed inset-y-0 left-0 z-50 flex h-screen w-72 flex-col overflow-y-auto border-r border-white/10 teal-gradient p-6 text-white transition-transform duration-300 overscroll-contain lg:static lg:h-auto lg:translate-x-0 lg:overflow-visible ${open ? "translate-x-0" : "-translate-x-full"
             }`}
         >
           <div className="flex items-center gap-3 border-b border-white/10 pb-6">
