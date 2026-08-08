@@ -34,6 +34,8 @@ export default function RegisterPage() {
         return
       }
 
+      localStorage.setItem("lastLoginEmail", email)
+
       router.push("/dashboard")
       router.refresh()
     } catch {

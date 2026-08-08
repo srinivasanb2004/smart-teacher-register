@@ -24,7 +24,6 @@ export async function proxy(req: NextRequest) {
   const isDashboard = pathname.startsWith("/dashboard")
   const isProtectedApi =
     pathname.startsWith("/api/") && !pathname.startsWith("/api/auth/")
-  const isAuthPage = pathname === "/login" || pathname === "/register"
 
   if (isDashboard && !authed) {
     const url = req.nextUrl.clone()
@@ -38,13 +37,6 @@ export async function proxy(req: NextRequest) {
       { error: "Not authenticated" },
       { status: 401 }
     )
-  }
-
-  if (isAuthPage && authed) {
-    const url = req.nextUrl.clone()
-    url.pathname = "/dashboard"
-    url.search = ""
-    return NextResponse.redirect(url)
   }
 
   return NextResponse.next()

@@ -3,7 +3,7 @@
 import { GraduationCap } from "lucide-react";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Users,
@@ -15,10 +15,12 @@ import {
   FileBarChart,
   Settings,
   BookOpen,
-  Bell,
   Menu,
+  LogOut,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import StudentSearch from "../../components/StudentSearch";
+import NotificationBell from "../../components/NotificationBell";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -39,6 +41,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const [teacherName, setTeacherName] = useState("Teacher");
@@ -55,7 +58,24 @@ export default function DashboardLayout({
       setSchoolName(settings.schoolName || "Smart Teacher Register");
       setTeacherEmail(settings.teacherEmail || "teacher@example.com");
     }
+
+    fetch("/api/auth/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.name) setTeacherName(data.name);
+        if (data?.email) setTeacherEmail(data.email);
+      })
+      .catch(() => {});
   }, []);
+
+  async function handleLogout() {
+    if (teacherEmail && teacherEmail !== "teacher@example.com") {
+      localStorage.setItem("lastLoginEmail", teacherEmail);
+    }
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.push("/login");
+    router.refresh();
+  }
 
   return (
     <div className="ledger-bg min-h-screen">
@@ -111,7 +131,7 @@ export default function DashboardLayout({
             })}
           </nav>
 
-          <div className="mt-auto pt-8">
+          <div className="mt-auto pt-8 space-y-4">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <p className="text-xs text-white/60">Academic Year</p>
               <p className="mt-1 font-semibold text-white">2026 – 2027</p>
@@ -122,12 +142,20 @@ export default function DashboardLayout({
                 75% term completed
               </p>
             </div>
+
+            <button
+              onClick={handleLogout}
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </button>
           </div>
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-30 border-b border-[var(--paper-dark)] bg-[#f9f3e6]/90 backdrop-blur">
-            <div className="flex items-center justify-between px-4 py-4 sm:px-6">
+            <div className="flex items-center justify-between gap-3 px-4 py-4 sm:px-6">
               <div className="flex items-center gap-3">
                 <button
                   className="rounded-xl border border-[var(--paper-dark)] bg-white p-2 text-[var(--ink)] lg:hidden"
@@ -147,11 +175,12 @@ export default function DashboardLayout({
                 </div>
               </div>
 
+              <div className="hidden lg:block flex-1 max-w-md">
+                <StudentSearch />
+              </div>
+
               <div className="flex items-center gap-3">
-                <button className="relative rounded-xl border border-[var(--paper-dark)] bg-white p-2 text-[var(--ink)] hover:bg-[var(--paper)]">
-                  <Bell className="h-5 w-5" />
-                  <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-[var(--amber)] ring-2 ring-[#f9f3e6]" />
-                </button>
+                <NotificationBell />
 
                 <div className="flex items-center gap-3 rounded-2xl border border-[var(--paper-dark)] bg-white px-3 py-2">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--teal)] text-sm font-semibold text-white">
@@ -171,7 +200,20 @@ export default function DashboardLayout({
                     </p>
                   </div>
                 </div>
+
+                <button
+                  onClick={handleLogout}
+                  title="Logout"
+                  className="flex items-center gap-2 rounded-xl border border-[var(--paper-dark)] bg-white px-3 py-2 text-sm font-medium text-[var(--ink)] transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span className="hidden sm:inline">Logout</span>
+                </button>
               </div>
+            </div>
+
+            <div className="lg:hidden px-4 pb-4 sm:px-6">
+              <StudentSearch />
             </div>
           </header>
 

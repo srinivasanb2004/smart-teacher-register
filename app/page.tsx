@@ -43,7 +43,7 @@ export default function HomePage() {
               <BookOpen className="h-6 w-6 text-amber-300" />
             </div>
             <div>
-              <p className="display-font text-xl font-semibold tracking-wide">
+              <p className="display-font text-base font-semibold tracking-wide md:text-xl">
                 SMART TEACHER REGISTER
               </p>
               <p className="text-xs text-amber-100/80">
@@ -66,21 +66,22 @@ export default function HomePage() {
               Contact
             </a>
           </nav>
-          <div className="hidden items-center gap-4 md:flex">
+          <div className="flex items-center gap-2">
             <a
               href="/login"
-              className="rounded-full border border-amber-300/50 bg-white/10 px-5 py-2 text-sm font-medium text-white backdrop-blur transition hover:bg-white/20 hover:border-amber-300"
+              className="rounded-full border border-amber-300/50 bg-white/10 px-3 py-2 text-xs font-medium text-white backdrop-blur transition hover:bg-white/20 hover:border-amber-300 md:px-5 md:text-sm"
             >
               Log In
             </a>
 
             <a
               href="/dashboard"
-              className="rounded-full px-5 py-2 text-sm font-medium amber-btn transition"
+              className="rounded-full px-3 py-2 text-xs font-medium amber-btn transition md:px-5 md:text-sm"
             >
               Get Started
             </a>
           </div>
+
         </div>
       </header>
 

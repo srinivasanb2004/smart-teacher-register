@@ -23,6 +23,9 @@ export default function Topbar() {
   }, [])
 
   async function handleLogout() {
+    if (me?.email) {
+      localStorage.setItem("lastLoginEmail", me.email)
+    }
     await fetch("/api/auth/logout", { method: "POST" })
     router.push("/login")
     router.refresh()
