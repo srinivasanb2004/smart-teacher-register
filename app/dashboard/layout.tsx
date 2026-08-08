@@ -206,10 +206,10 @@ export default function DashboardLayout({
                 <button
                   onClick={handleLogout}
                   title="Logout"
-                  className="flex items-center gap-2 rounded-xl border border-[var(--paper-dark)] bg-white px-3 py-2 text-sm font-medium text-[var(--ink)] transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                  className="hidden lg:flex items-center gap-2 rounded-xl border border-[var(--paper-dark)] bg-white px-3 py-2 text-sm font-medium text-[var(--ink)] transition hover:border-red-200 hover:bg-red-50 hover:text-red-600"
                 >
                   <LogOut className="h-5 w-5" />
-                  <span className="hidden sm:inline">Logout</span>
+                  <span>Logout</span>
                 </button>
               </div>
             </div>
