@@ -80,7 +80,7 @@ export default function AddStudentPage() {
             <option>Other</option>
           </select>
 
-          <input type="date" value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} className="border rounded-xl px-4 py-3" required />
+          <input placeholder="DOB" type="date" value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} className="border rounded-xl px-4 py-3" required />
 
           <input placeholder="Parent Name" value={form.parentName} onChange={(e) => setForm({ ...form, parentName: e.target.value })} className="border rounded-xl px-4 py-3" required />
           <input placeholder="Parent Phone" value={form.parentPhone} onChange={(e) => setForm({ ...form, parentPhone: e.target.value })} className="border rounded-xl px-4 py-3" required />
