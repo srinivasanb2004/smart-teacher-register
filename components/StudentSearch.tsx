@@ -84,6 +84,20 @@ export default function StudentSearch() {
           placeholder="Search students..."
           className="w-full bg-transparent text-xs text-stone-700 outline-none placeholder:text-stone-400 md:text-sm"
         />
+
+        {query && (
+          <button
+            type="button"
+            onClick={() => {
+              setQuery("")
+              setOpen(false)
+            }}
+            className="flex h-5 w-5 items-center justify-center rounded-full text-stone-400 hover:bg-stone-100 hover:text-stone-700 md:h-6 md:w-6"
+            aria-label="Clear search"
+          >
+            ✕
+          </button>
+        )}
       </div>
 
       {open && q && (

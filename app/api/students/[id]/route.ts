@@ -32,3 +32,45 @@ export async function DELETE(
     return NextResponse.json(deleted)
   })
 }
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  return withTeacher(async (teacherId) => {
+    const { id } = await params
+    const studentId = Number(id)
+
+    const body = await req.json()
+
+    const existing = await prisma.student.findFirst({
+      where: { id: studentId, teacherId },
+    })
+
+    if (!existing) {
+      return NextResponse.json(
+        { error: "Student not found" },
+        { status: 404 }
+      )
+    }
+
+    const updated = await prisma.student.update({
+      where: { id: studentId },
+      data: {
+        admissionNo: body.admissionNo,
+        rollNo: body.rollNo,
+        name: body.name,
+        gender: body.gender,
+        dob: body.dob ? new Date(body.dob) : null,
+        parentName: body.parentName,
+        parentPhone: body.parentPhone,
+        address: body.address,
+        yearId: Number(body.yearId),
+        classId: Number(body.classId),
+        sectionId: Number(body.sectionId),
+      },
+    })
+
+    return NextResponse.json(updated)
+  })
+}

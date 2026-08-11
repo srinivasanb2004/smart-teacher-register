@@ -4,7 +4,7 @@ import toast from "react-hot-toast"
 
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
-import { Search, Trash2, Eye, Plus } from "lucide-react"
+import { Search, Trash2, Eye, Plus, Pencil } from "lucide-react"
 
 type Student = {
   id: number
@@ -112,8 +112,19 @@ export default function StudentsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or admission no"
-              className="w-full border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border rounded-xl pl-10 pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
+
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
           </div>
 
           <select
@@ -215,6 +226,14 @@ export default function StudentsPage() {
                       >
                         <Eye size={16} />
                         View
+                      </Link>
+
+                      <Link
+                        href={`/dashboard/students/${student.id}/edit`}
+                        className="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-blue-200 text-blue-600 hover:bg-blue-50"
+                      >
+                        <Pencil size={16} />
+                        Edit
                       </Link>
 
                       <button

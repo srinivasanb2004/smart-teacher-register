@@ -7,14 +7,7 @@ type SchoolClass = { id: number; name: string; yearId: number }
 type Section = { id: number; name: string; classId: number }
 type Student = { id: number; name: string; rollNo: string }
 type Exam = { id: number; name: string }
-
-const subjects = [
-  "Tamil",
-  "English",
-  "Mathematics",
-  "Science",
-  "Social Science",
-]
+type Subject = { id: number; name: string }
 
 export default function MarksPage() {
   const [years, setYears] = useState<AcademicYear[]>([])
@@ -22,14 +15,16 @@ export default function MarksPage() {
   const [sections, setSections] = useState<Section[]>([])
   const [students, setStudents] = useState<Student[]>([])
   const [exams, setExams] = useState<Exam[]>([])
+  const [subjects, setSubjects] = useState<Subject[]>([])
 
   const [newExam, setNewExam] = useState("")
+  const [newSubject, setNewSubject] = useState("")
 
   const [yearId, setYearId] = useState("")
   const [classId, setClassId] = useState("")
   const [sectionId, setSectionId] = useState("")
   const [examId, setExamId] = useState("")
-  const [subject, setSubject] = useState(subjects[0])
+  const [subject, setSubject] = useState("")
 
   const [marks, setMarks] = useState<Record<number, string>>({})
 
@@ -39,11 +34,17 @@ export default function MarksPage() {
       const c = await fetch("/api/classes").then((r) => r.json())
       const s = await fetch("/api/sections").then((r) => r.json())
       const e = await fetch("/api/exams").then((r) => r.json())
+      const sub = await fetch("/api/subjects").then((r) => r.json())
 
       setYears(y)
       setClasses(c)
       setSections(s)
       setExams(e)
+      setSubjects(sub)
+
+      if (sub.length > 0) {
+        setSubject(sub[0].name)
+      }
     }
 
     load()
@@ -84,18 +85,37 @@ export default function MarksPage() {
   }, [sectionId])
 
   async function createExam() {
-    if (!newExam) return
+    if (!newExam.trim()) return
 
     await fetch("/api/exams", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newExam }),
+      body: JSON.stringify({ name: newExam.trim() }),
     })
 
     setNewExam("")
 
     const e = await fetch("/api/exams").then((r) => r.json())
     setExams(e)
+  }
+
+  async function createSubject() {
+    if (!newSubject.trim()) return
+
+    const subjectName = newSubject.trim()
+
+    await fetch("/api/subjects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: subjectName }),
+    })
+
+    setNewSubject("")
+
+    const sub = await fetch("/api/subjects").then((r) => r.json())
+    setSubjects(sub)
+
+    setSubject(subjectName)
   }
 
   async function saveMarks() {
@@ -124,6 +144,7 @@ export default function MarksPage() {
 
   return (
     <div className="space-y-6">
+      {/* Create Exam + Subject */}
       <div className="bg-white rounded-2xl border shadow-sm p-6 space-y-4">
         <h1 className="text-2xl font-bold">Bulk Marks Entry</h1>
 
@@ -142,55 +163,109 @@ export default function MarksPage() {
             Create Exam
           </button>
         </div>
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          <input
+            value={newSubject}
+            onChange={(e) => setNewSubject(e.target.value)}
+            placeholder="Subject Name"
+            className="flex-1 min-w-0 border rounded-xl px-4 py-3"
+          />
+
+          <button
+            onClick={createSubject}
+            className="w-full sm:w-auto shrink-0 bg-teal-600 text-white px-5 py-3 rounded-xl hover:bg-teal-700"
+          >
+            Add Subject
+          </button>
+        </div>
       </div>
 
+      {/* Filters */}
       <div className="bg-white rounded-2xl border shadow-sm p-6">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-          <select value={yearId} onChange={(e)=>{setYearId(e.target.value);setClassId("");setSectionId("")}} className="border rounded-xl px-4 py-3">
+          <select
+            value={yearId}
+            onChange={(e) => {
+              setYearId(e.target.value)
+              setClassId("")
+              setSectionId("")
+            }}
+            className="border rounded-xl px-4 py-3"
+          >
             <option value="">Academic Year</option>
-            {years.map((y)=>(
-              <option key={y.id} value={y.id}>{y.name}</option>
+            {years.map((y) => (
+              <option key={y.id} value={y.id}>
+                {y.name}
+              </option>
             ))}
           </select>
 
-          <select value={classId} onChange={(e)=>{setClassId(e.target.value);setSectionId("")}} className="border rounded-xl px-4 py-3">
+          <select
+            value={classId}
+            onChange={(e) => {
+              setClassId(e.target.value)
+              setSectionId("")
+            }}
+            className="border rounded-xl px-4 py-3"
+          >
             <option value="">Class</option>
-            {filteredClasses.map((c)=>(
-              <option key={c.id} value={c.id}>Class {c.name}</option>
+            {filteredClasses.map((c) => (
+              <option key={c.id} value={c.id}>
+                Class {c.name}
+              </option>
             ))}
           </select>
 
-          <select value={sectionId} onChange={(e)=>setSectionId(e.target.value)} className="border rounded-xl px-4 py-3">
+          <select
+            value={sectionId}
+            onChange={(e) => setSectionId(e.target.value)}
+            className="border rounded-xl px-4 py-3"
+          >
             <option value="">Section</option>
-            {filteredSections.map((s)=>(
-              <option key={s.id} value={s.id}>Section {s.name}</option>
+            {filteredSections.map((s) => (
+              <option key={s.id} value={s.id}>
+                Section {s.name}
+              </option>
             ))}
           </select>
 
-          <select value={examId} onChange={(e)=>setExamId(e.target.value)} className="border rounded-xl px-4 py-3">
+          <select
+            value={examId}
+            onChange={(e) => setExamId(e.target.value)}
+            className="border rounded-xl px-4 py-3"
+          >
             <option value="">Exam</option>
-            {exams.map((e)=>(
-              <option key={e.id} value={e.id}>{e.name}</option>
+            {exams.map((e) => (
+              <option key={e.id} value={e.id}>
+                {e.name}
+              </option>
             ))}
           </select>
 
-          <select value={subject} onChange={(e)=>setSubject(e.target.value)} className="border rounded-xl px-4 py-3">
-            {subjects.map((s)=>(
-              <option key={s} value={s}>{s}</option>
+          <select
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            className="border rounded-xl px-4 py-3"
+          >
+            
+            {subjects.map((s) => (
+              <option key={s.id} value={s.name}>
+                {s.name}
+              </option>
             ))}
           </select>
         </div>
       </div>
 
+      {/* Marks Table */}
       {students.length > 0 && (
         <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
           <div className="p-6 border-b flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-semibold">
-                Enter Marks
-              </h2>
+              <h2 className="text-xl font-semibold">Enter Marks</h2>
               <p className="text-sm text-stone-500 mt-1">
-                Subject: {subject}
+                Subject: {subject || "-"}
               </p>
             </div>
 
@@ -202,39 +277,43 @@ export default function MarksPage() {
             </button>
           </div>
 
-          <table className="w-full">
-            <thead className="bg-stone-100">
-              <tr>
-                <th className="text-left p-4">Roll No</th>
-                <th className="text-left p-4">Student Name</th>
-                <th className="text-left p-4">Marks / 100</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {students.map((student)=>(
-                <tr key={student.id} className="border-t">
-                  <td className="p-4">{student.rollNo}</td>
-                  <td className="p-4 font-medium">{student.name}</td>
-                  <td className="p-4">
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={marks[student.id] || ""}
-                      onChange={(e)=>
-                        setMarks({
-                          ...marks,
-                          [student.id]: e.target.value,
-                        })
-                      }
-                      className="border rounded-xl px-3 py-2 w-32"
-                    />
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-stone-100">
+                <tr>
+                  <th className="text-left p-4">Roll No</th>
+                  <th className="text-left p-4">Student Name</th>
+                  <th className="text-left p-4">Marks / 100</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody>
+                {students.map((student) => (
+                  <tr key={student.id} className="border-t">
+                    <td className="p-4">{student.rollNo}</td>
+                    <td className="p-4 font-medium">
+                      {student.name}
+                    </td>
+                    <td className="p-4">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={marks[student.id] || ""}
+                        onChange={(e) =>
+                          setMarks({
+                            ...marks,
+                            [student.id]: e.target.value,
+                          })
+                        }
+                        className="border rounded-xl px-3 py-2 w-32"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
