@@ -89,8 +89,7 @@ export default function AddStudentPage() {
               type="date"
               value={form.dob}
               onChange={(e) => setForm({ ...form, dob: e.target.value })}
-              className="w-full border rounded-xl px-4 py-3 text-base min-h-[48px]"
-              required
+              className="w-full max-w-full box-border appearance-none border rounded-xl px-4 py-3 text-base min-h-[48px] bg-white" required
             />
           </div>
 
