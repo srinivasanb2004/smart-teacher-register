@@ -80,39 +80,41 @@ export default function AddStudentPage() {
             <option>Other</option>
           </select>
 
-          <input placeholder="DOB" type="date" value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} className="border rounded-xl px-4 py-3" required />
+          <input type="date" value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} className="w-full border rounded-xl px-4 py-3 text-base min-h-[48px] bg-white" required />
 
-          <input placeholder="Parent Name" value={form.parentName} onChange={(e) => setForm({ ...form, parentName: e.target.value })} className="border rounded-xl px-4 py-3" required />
-          <input placeholder="Parent Phone" value={form.parentPhone} onChange={(e) => setForm({ ...form, parentPhone: e.target.value })} className="border rounded-xl px-4 py-3" required />
+      
 
-          <textarea placeholder="Address" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="border rounded-xl px-4 py-3 md:col-span-2" rows={3} required />
+      <input placeholder="Parent Name" value={form.parentName} onChange={(e) => setForm({ ...form, parentName: e.target.value })} className="border rounded-xl px-4 py-3" required />
+      <input placeholder="Parent Phone" value={form.parentPhone} onChange={(e) => setForm({ ...form, parentPhone: e.target.value })} className="border rounded-xl px-4 py-3" required />
 
-          <select value={form.yearId} onChange={(e) => setForm({ ...form, yearId: e.target.value, classId: "", sectionId: "" })} className="border rounded-xl px-4 py-3" required>
-            <option value="">Select Academic Year</option>
-            {years.map((y) => (
-              <option key={y.id} value={y.id}>{y.name}</option>
-            ))}
-          </select>
+      <textarea placeholder="Address" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="border rounded-xl px-4 py-3 md:col-span-2" rows={3} required />
 
-          <select value={form.classId} onChange={(e) => setForm({ ...form, classId: e.target.value, sectionId: "" })} className="border rounded-xl px-4 py-3" required>
-            <option value="">Select Class</option>
-            {filteredClasses.map((c) => (
-              <option key={c.id} value={c.id}>Class {c.name}</option>
-            ))}
-          </select>
+      <select value={form.yearId} onChange={(e) => setForm({ ...form, yearId: e.target.value, classId: "", sectionId: "" })} className="border rounded-xl px-4 py-3" required>
+        <option value="">Select Academic Year</option>
+        {years.map((y) => (
+          <option key={y.id} value={y.id}>{y.name}</option>
+        ))}
+      </select>
 
-          <select value={form.sectionId} onChange={(e) => setForm({ ...form, sectionId: e.target.value })} className="border rounded-xl px-4 py-3 md:col-span-2" required>
-            <option value="">Select Section</option>
-            {filteredSections.map((s) => (
-              <option key={s.id} value={s.id}>Section {s.name}</option>
-            ))}
-          </select>
+      <select value={form.classId} onChange={(e) => setForm({ ...form, classId: e.target.value, sectionId: "" })} className="border rounded-xl px-4 py-3" required>
+        <option value="">Select Class</option>
+        {filteredClasses.map((c) => (
+          <option key={c.id} value={c.id}>Class {c.name}</option>
+        ))}
+      </select>
 
-          <button type="submit" className="bg-teal-600 text-white py-3 rounded-xl hover:bg-teal-700 md:col-span-2">
-            Save Student
-          </button>
-        </form>
-      </div>
-    </div>
+      <select value={form.sectionId} onChange={(e) => setForm({ ...form, sectionId: e.target.value })} className="border rounded-xl px-4 py-3 md:col-span-2" required>
+        <option value="">Select Section</option>
+        {filteredSections.map((s) => (
+          <option key={s.id} value={s.id}>Section {s.name}</option>
+        ))}
+      </select>
+
+      <button type="submit" className="bg-teal-600 text-white py-3 rounded-xl hover:bg-teal-700 md:col-span-2">
+        Save Student
+      </button>
+    </form>
+      </div >
+    </div >
   )
 }
