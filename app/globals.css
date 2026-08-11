@@ -186,3 +186,12 @@ textarea::placeholder {
   outline: 2px solid rgba(8,60,58,0.35);
   outline-offset: 2px;
 }
+
+/* Show hand cursor on all clickable elements */
+button,
+[role="button"],
+a,
+input[type="submit"],
+input[type="button"] {
+  cursor: pointer;
+}

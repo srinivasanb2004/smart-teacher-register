@@ -174,8 +174,11 @@ model Fee {
   studentId   Int
   teacherId   Int
   term        String
-  amount      Int
-  status      String    @default("Pending")
+
+  totalAmount Int
+  paidAmount  Int       @default(0)
+
+  status      String    @default("Unpaid")
   paymentDate DateTime?
   createdAt   DateTime  @default(now())
 

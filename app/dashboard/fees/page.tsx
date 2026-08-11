@@ -63,7 +63,7 @@ export default async function FeesDashboardPage({
       student,
       fee,
       status: fee?.status ?? "Unpaid",
-      amount: fee?.amount ?? 0,
+      amount: fee?.totalAmount ?? 0,
       term: fee?.term ?? term ?? "-",
     }
   })
@@ -74,8 +74,18 @@ export default async function FeesDashboardPage({
   const paidRows = feeRows.filter((r) => r.status === "Paid")
   const unpaidRows = feeRows.filter((r) => r.status !== "Paid")
 
-  const paidAmount = paidRows.reduce((s, r) => s + r.amount, 0)
-  const pendingAmount = unpaidRows.reduce((s, r) => s + r.amount, 0)
+  const partiallyPaidCount = feeRows.filter(
+    (r) =>
+      r.fee &&
+      r.fee.paidAmount > 0 &&
+      r.fee.paidAmount < r.fee.totalAmount
+  ).length
+
+  const paidAmount = paidRows.reduce((s, r) => s + r.fee.totalAmount, 0)
+  const pendingAmount = unpaidRows.reduce(
+    (s, r) => s + (r.fee ? r.fee.totalAmount - r.fee.paidAmount : 0),
+    0
+  )
   const totalAmount = paidAmount + pendingAmount
 
   return (
@@ -109,10 +119,10 @@ export default async function FeesDashboardPage({
           </p>
         </div>
 
-        <div className="bg-teal-50 border border-teal-200 rounded-2xl p-5">
-          <p className="text-sm text-teal-700">Pending Students</p>
-          <p className="text-2xl font-bold text-teal-800 mt-2">
-            {unpaidRows.length}
+        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-5">
+          <p className="text-sm text-yellow-700">Partially Paid Students</p>
+          <p className="text-2xl font-bold text-yellow-800 mt-2">
+            {partiallyPaidCount}
           </p>
         </div>
       </div>
@@ -169,7 +179,9 @@ export default async function FeesDashboardPage({
                       <span
                         className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${row.status === "Paid"
                           ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
+                          : row.status === "Partial"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-red-100 text-red-700"
                           }`}
                       >
                         {row.status}

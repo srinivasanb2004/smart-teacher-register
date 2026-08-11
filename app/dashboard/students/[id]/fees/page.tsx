@@ -7,7 +7,8 @@ import { useEffect, useMemo, useState } from "react"
 type Fee = {
   id: number
   term: string
-  amount: number
+  totalAmount: number
+  paidAmount: number
   status: string
   paymentDate: string | null
 }
@@ -32,6 +33,7 @@ export default function StudentFeesPage({
   const [studentId, setStudentId] = useState<string>("")
   const [amounts, setAmounts] = useState<Record<string, string>>({})
   const [savingTerm, setSavingTerm] = useState<string | null>(null)
+  const [payments, setPayments] = useState<Record<string, string>>({})
 
   async function loadStudent(id: string) {
     const data = await fetch("/api/students").then((r) => r.json())
@@ -41,7 +43,7 @@ export default function StudentFeesPage({
     const nextAmounts: Record<string, string> = {}
     TERMS.forEach((term) => {
       const existing = found?.fees.find((f: Fee) => f.term === term)
-      nextAmounts[term] = existing ? String(existing.amount) : ""
+      nextAmounts[term] = existing ? String(existing.totalAmount) : ""
     })
     setAmounts(nextAmounts)
   }
@@ -69,7 +71,7 @@ export default function StudentFeesPage({
     const res = await fetch("/api/fees", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ studentId, term, amount }),
+      body: JSON.stringify({ studentId, term, totalAmount: amount }),
     })
 
     if (!res.ok) {
@@ -83,30 +85,53 @@ export default function StudentFeesPage({
     setSavingTerm(null)
   }
 
-  async function updateStatus(feeId: number, status: string) {
-    await fetch(`/api/fees/${feeId}`, {
+  async function addPayment(feeId: number, term: string) {
+    const amount = Number(payments[term])
+
+    if (!amount || amount <= 0) {
+      alert("Enter a valid payment amount")
+      return
+    }
+
+    const res = await fetch(`/api/fees/${feeId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
+      body: JSON.stringify({ paidAmount: amount }),
     })
 
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}))
+      alert(data.error || "Could not add payment")
+      return
+    }
+
+    setPayments({ ...payments, [term]: "" })
     await loadStudent(studentId)
   }
 
   const summary = useMemo(() => {
     if (!student) {
-      return { set: 0, paid: 0, pending: 0, paidAmount: 0, pendingAmount: 0 }
+      return {
+        set: 0,
+        paid: 0,
+        unpaid: 0,
+        paidAmount: 0,
+        balanceAmount: 0,
+      }
     }
 
     const paidFees = student.fees.filter((f) => f.status === "Paid")
-    const pendingFees = student.fees.filter((f) => f.status === "Pending")
+    const unpaidFees = student.fees.filter((f) => f.status === "Unpaid")
 
     return {
       set: student.fees.length,
       paid: paidFees.length,
-      pending: pendingFees.length,
-      paidAmount: paidFees.reduce((s, f) => s + f.amount, 0),
-      pendingAmount: pendingFees.reduce((s, f) => s + f.amount, 0),
+      unpaid: unpaidFees.length,
+      paidAmount: student.fees.reduce((s, f) => s + f.paidAmount, 0),
+      balanceAmount: student.fees.reduce(
+        (s, f) => s + (f.totalAmount - f.paidAmount),
+        0
+      ),
     }
   }, [student])
 
@@ -153,16 +178,16 @@ export default function StudentFeesPage({
         </div>
 
         <div className="bg-red-50 border border-red-200 rounded-2xl p-5">
-          <p className="text-sm text-red-700">Pending Terms</p>
+          <p className="text-sm text-red-700">Unpaid Terms</p>
           <p className="text-2xl font-bold text-red-800 mt-2">
-            {summary.pending}
+            {summary.unpaid}
           </p>
         </div>
 
         <div className="bg-teal-50 border border-teal-200 rounded-2xl p-5">
-          <p className="text-sm text-teal-700">Pending Amount</p>
+          <p className="text-sm text-teal-700">Balance Amount</p>
           <p className="text-2xl font-bold text-teal-800 mt-2">
-            ₹{summary.pendingAmount}
+            ₹{summary.balanceAmount}
           </p>
         </div>
       </div>
@@ -181,90 +206,108 @@ export default function StudentFeesPage({
             <thead className="bg-stone-100">
               <tr>
                 <th className="text-left p-4">Term</th>
-                <th className="text-left p-4">Amount (₹)</th>
+                <th className="text-left p-4">Total Fee (₹)</th>
+                <th className="text-left p-4">Paid (₹)</th>
+                <th className="text-left p-4">Balance (₹)</th>
                 <th className="text-left p-4">Status</th>
                 <th className="text-left p-4">Payment Date</th>
-                <th className="text-left p-4">Action</th>
+                <th className="text-left p-4">Receive Payment</th>
               </tr>
             </thead>
 
-          <tbody>
-            {TERMS.map((term) => {
-              const fee = student.fees.find((f) => f.term === term)
+            <tbody>
+              {TERMS.map((term) => {
+                const fee = student.fees.find((f) => f.term === term)
 
-              return (
-                <tr key={term} className="border-t">
-                  <td className="p-4 font-medium">{term}</td>
+                return (
+                  <tr key={term} className="border-t">
+                    <td className="p-4 font-medium">{term}</td>
 
-                  <td className="p-4">
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="number"
-                        min="1"
-                        placeholder="Enter amount"
-                        value={amounts[term] ?? ""}
-                        onChange={(e) =>
-                          setAmounts({ ...amounts, [term]: e.target.value })
-                        }
-                        className="border rounded-lg px-3 py-2 w-32"
-                      />
-                      <button
-                        onClick={() => saveAmount(term)}
-                        disabled={savingTerm === term}
-                        className="text-sm bg-stone-800 text-white px-3 py-2 rounded-lg hover:bg-stone-900 disabled:opacity-50"
-                      >
-                        {fee ? "Update" : "Save"}
-                      </button>
-                    </div>
-                  </td>
+                    <td className="p-4">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="number"
+                          min="1"
+                          placeholder="Enter total fee"
+                          value={amounts[term] ?? ""}
+                          onChange={(e) =>
+                            setAmounts({ ...amounts, [term]: e.target.value })
+                          }
+                          className="border rounded-lg px-3 py-2 w-36"
+                        />
+                        <button
+                          onClick={() => saveAmount(term)}
+                          disabled={savingTerm === term}
+                          className="text-sm bg-stone-800 text-white px-3 py-2 rounded-lg hover:bg-stone-900 disabled:opacity-50"
+                        >
+                          {fee ? "Update" : "Save"}
+                        </button>
+                      </div>
+                    </td>
 
-                  <td className="p-4">
-                    {fee ? (
-                      <span
-                        className={
-                          fee.status === "Paid"
-                            ? "bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
-                            : "bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm"
-                        }
-                      >
-                        {fee.status}
-                      </span>
-                    ) : (
-                      <span className="text-stone-400 text-sm">Not set</span>
-                    )}
-                  </td>
+                    <td className="p-4 font-medium text-green-700">
+                      ₹{fee?.paidAmount ?? 0}
+                    </td>
 
-                  <td className="p-4 text-sm text-stone-600">
-                    {fee?.paymentDate
-                      ? new Date(fee.paymentDate).toLocaleDateString()
-                      : "-"}
-                  </td>
+                    <td className="p-4 font-medium text-red-700">
+                      ₹{fee ? fee.totalAmount - fee.paidAmount : 0}
+                    </td>
 
-                  <td className="p-4">
-                    {!fee ? (
-                      <span className="text-stone-400 text-sm">
-                        Save amount first
-                      </span>
-                    ) : fee.status === "Pending" ? (
-                      <button
-                        onClick={() => updateStatus(fee.id, "Paid")}
-                        className="bg-green-600 text-white px-3 py-2 rounded-xl hover:bg-green-700 text-sm"
-                      >
-                        Mark Paid
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => updateStatus(fee.id, "Pending")}
-                        className="bg-stone-600 text-white px-3 py-2 rounded-xl hover:bg-stone-700 text-sm"
-                      >
-                        Mark Pending
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
+                    <td className="p-4">
+                      {fee ? (
+                        <span
+                          className={
+                            fee.status === "Paid"
+                              ? "bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
+                              : fee.status === "Partial"
+                                ? "bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm"
+                                : "bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm"
+                          }
+                        >
+                          {fee.status}
+                        </span>
+                      ) : (
+                        <span className="text-stone-400 text-sm">Not set</span>
+                      )}
+                    </td>
+
+                    <td className="p-4 text-sm text-stone-600">
+                      {fee?.paymentDate
+                        ? new Date(fee.paymentDate).toLocaleDateString()
+                        : "-"}
+                    </td>
+
+                    <td className="p-4">
+                      {!fee ? (
+                        <span className="text-stone-400 text-sm">
+                          Save amount first
+                        </span>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="number"
+                            min="1"
+                            placeholder="Amount"
+                            value={payments[term] ?? ""}
+                            onChange={(e) =>
+                              setPayments({ ...payments, [term]: e.target.value })
+                            }
+                            className="border rounded-lg px-3 py-2 w-28"
+                          />
+
+                          <button
+                            onClick={() => addPayment(fee.id, term)}
+                            className="bg-teal-600 text-white px-3 py-2 rounded-xl hover:bg-teal-700 text-sm"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
           </table>
         </div>
       </div>
@@ -288,6 +331,7 @@ export default function StudentFeesPage({
             <p><span className="font-medium">Section:</span> {student.section.name}</p>
             <p><span className="font-medium">Paid Terms:</span> {summary.paid}</p>
             <p><span className="font-medium">Paid Amount:</span> ₹{summary.paidAmount}</p>
+            <p><span className="font-medium">Balance Amount:</span> ₹{summary.balanceAmount}</p>
           </div>
         </div>
 

@@ -35,6 +35,8 @@ export async function POST(req: NextRequest) {
   const body = await req.json()
 
   const term = String(body.term)
+  const totalAmount = Number(body.totalAmount)
+
 
   const existingFee = await prisma.fee.findFirst({
     where: {
@@ -50,7 +52,13 @@ export async function POST(req: NextRequest) {
     fee = await prisma.fee.update({
       where: { id: existingFee.id },
       data: {
-        amount: Number(body.amount),
+        totalAmount: totalAmount,
+        status:
+          existingFee.paidAmount === 0
+            ? "Unpaid"
+            : existingFee.paidAmount >= totalAmount
+              ? "Paid"
+              : "Partial",
       },
     })
   } else {
@@ -59,8 +67,9 @@ export async function POST(req: NextRequest) {
         teacherId: teacher.teacherId,
         studentId: Number(body.studentId),
         term,
-        amount: Number(body.amount),
-        status: "Pending",
+        totalAmount,
+        paidAmount: 0,
+        status: "Unpaid",
       },
     })
   }

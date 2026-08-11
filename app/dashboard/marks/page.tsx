@@ -248,7 +248,10 @@ export default function MarksPage() {
             onChange={(e) => setSubject(e.target.value)}
             className="border rounded-xl px-4 py-3"
           >
-            
+            <option value="" disabled>
+              Subject
+            </option>
+
             {subjects.map((s) => (
               <option key={s.id} value={s.name}>
                 {s.name}
